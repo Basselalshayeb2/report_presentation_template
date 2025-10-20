@@ -1,0 +1,260 @@
+\documentclass{beamer}
+\usepackage{amsmath, amssymb, amsfonts, mathtools}
+\usepackage{booktabs, graphicx}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{caption}
+\usepackage{listings}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+
+%Для защит онлайн лучше использовать разрешение 16x9
+%\documentclass[aspectratio=169]{beamer}
+
+\input{preamble.tex}
+
+% То, что в квадратных скобках, отображается внизу по центру каждого слайда.
+\title[Регрессия и корреляция в Python]{Регрессионный анализ и корреляция\\(живая демонстрация в Python)}
+
+% То, что в квадратных скобках, отображается в левом нижнем углу.
+\institute[СПбГУ]{\\ Курс «Методы статистической обработки информации»}
+
+% То, что в квадратных скобках, отображается в левом нижнем углу.
+\author[Альшаеб Басель]{Альшаеб Басель, группа 24.М71-мм}
+
+\begin{document}
+{
+\setbeamertemplate{footline}{}
+% Лого университета или организации, отображается в шапке титульного листа
+\begin{frame}
+  \includegraphics[width=1.4cm]{pictures/SPbGU_Logo.png}
+\vspace{-35pt}
+\hspace{-10pt}
+\begin{center}
+   \begin{tabular}{c}
+        \scriptsize{Санкт-Петербургский государственный университет} \\
+        \scriptsize{Кафедра системного программирования}
+    \end{tabular}
+\titlepage
+\end{center}
+
+\btVFill
+
+{\scriptsize
+  % У научного руководителя должна быть указана научная степень
+   \textbf{Преподаватель:} д.ф.-м.н. профессор Н.К. Кривулин \\
+ }
+\begin{center}
+  \vspace{5pt}
+  \scriptsize{Санкт-Петербург\\
+                 2025}
+  \end{center}
+
+\end{frame}
+}
+
+
+% ====== СЛАЙД: ЦЕЛИ И ФОРМАТ ======
+\begin{frame}{Формат экзаменационной презентации}
+\textbf{Цель:} продемонстрировать решение задач статистического анализа на выбранном инструменте (Python: pandas, numpy, matplotlib, statsmodels).\\[4pt]
+\textbf{Требование к структуре:}
+\begin{itemize}
+  \item краткое введение в инструмент;
+  \item демонстрация решения задачи на примере реальных/синтетических данных;
+  \item интерпретация результатов и выводы.
+\end{itemize}
+\textit{Соответствует общему плану презентации из методических указаний.}
+\end{frame}
+
+
+
+% ====== СЛАЙД: ПЛАН ======
+\begin{frame}{План выступления}
+\begin{enumerate}
+  \item Постановка задачи и данные.
+  \item Краткое введение в Python-инструментарий.
+  \item Теория: корреляция и линейная регрессия.
+  \item Демонстрация:
+  \begin{itemize}
+    \item описательная статистика и корреляции;
+    \item модель OLS, сводка, проверка гипотез;
+    \item диагностика остатков, доверительные и предсказательные интервалы;
+    \item краткая связь с ANOVA (F-тест).
+  \end{itemize}
+  \item Выводы и ограничения.
+\end{enumerate}
+\end{frame}
+
+
+% ====== СЛАЙД: ПОСТАНОВКА ЗАДАЧИ ======
+\begin{frame}{Постановка задачи}
+\textbf{Задача:} изучить линейную связь между признаками и целевой переменной и построить модель для предсказания.\\[6pt]
+\textbf{Пример:} прогноз цены по площади и числу комнат (синтетический набор данных, размер $n=200$).\\[6pt]
+\textbf{Почему линейная регрессия и корреляция?}
+\begin{itemize}
+  \item простые модели;
+  \item тесная связь с проверкой гипотез и доверительными интервалами;
+  \item соответствуют темам курса (оценивание, гипотезы, корреляция, регрессия, ANOVA).
+\end{itemize}
+\end{frame}
+
+% ====== СЛАЙД: ИНСТРУМЕНТ ======
+\begin{frame}{Инструментарий Python для демонстрации}
+\begin{itemize}
+  \item \texttt{pandas}: загрузка/предобработка данных, таблицы;
+  \item \texttt{numpy}: работа с массивами, генерация данных;
+  \item \texttt{matplotlib}: базовые графики;
+  \item \texttt{statsmodels}: регрессия OLS, сводка, интервал оценки и предсказания.
+\end{itemize}
+\textbf{Запуск:} Jupyter/Colab/VS~Code.\\
+\textbf{Установка:} \texttt{pip install pandas numpy matplotlib statsmodels}
+\end{frame}
+
+% ====== СЛАЙД: ТЕОРИЯ КОРРЕЛЯЦИИ ======
+\begin{frame}{Коэффициент корреляции Пирсона}
+Для двух выборок $(x_i)$ и $(y_i)$, $i=1,\dots,n$, выборочная ковариация:
+\[
+s_{XY}=\frac{1}{n}\sum_{i=1}^n (x_i-\bar x)(y_i-\bar y),
+\]
+выборочные дисперсии $s_X^2, s_Y^2$, коэффициент корреляции:
+\[
+r_{XY}=\frac{\sum_{i=1}^n (x_i-\bar x)(y_i-\bar y)}
+{\sqrt{\sum_{i=1}^n (x_i-\bar x)^2}\sqrt{\sum_{i=1}^n (y_i-\bar y)^2}}\in[-1,1].
+\]
+Интерпретация: сила \emph{линейной} связи (не причинность). При $|r|\approx 1$ зависимость близка к линейной.
+\end{frame}
+
+
+% ====== СЛАЙД: ТЕОРИЯ РЕГРЕССИИ ======
+\begin{frame}{Линейная регрессия (многомерная)}
+Модель:
+\[
+y=\beta_0+\beta_1x_1+\dots+\beta_px_p+\varepsilon,\quad \E[\varepsilon]=0,\ \Var(\varepsilon)=\sigma^2.
+\]
+Оценивание $\beta$ методом наименьших квадратов (МНК):
+\[
+\widehat\beta=\arg\min_\beta \sum_{i=1}^n (y_i-\beta_0-\sum_{j=1}^p\beta_j x_{ij})^2.
+\]
+Качество: $R^2$, скорректированный $R^2$. Проверка гипотез: $H_0:\beta_j=0$. Доверительные интервалы для коэффициентов и предсказаний.
+\end{frame}
+
+% ====== СЛАЙД: СВЯЗЬ С ГИПОТЕЗАМИ И ИНТЕРВАЛАМИ ======
+\begin{frame}{Гипотезы и интервальные оценки в регрессии}
+\begin{itemize}
+  \item \textbf{Проверка гипотез} о параметрах: $H_0:\beta_j=0$ (t-стат., p-value).
+  \item \textbf{F-тест} значимости всей модели (связь с ANOVA).
+  \item \textbf{Доверительные интервалы} для параметров (оценки и их точность).
+  \item \textbf{Предсказательные интервалы} для новых наблюдений (учитывают шум).
+\end{itemize}
+\end{frame}
+
+
+% ====== СЛАЙД: ДЕМО — ДАННЫЕ ======
+\begin{frame}[fragile]{Демонстрация: генерация данных}
+\begin{lstlisting}[language=Python]
+import numpy as np, pandas as pd, matplotlib.pyplot as plt
+import statsmodels.api as sm; np.random.seed(42)
+
+n = 200
+area  = np.random.uniform(30, 150, n)   # площадь
+rooms = np.random.uniform(1, 5, n)      # комнаты
+eps   = np.random.normal(0, 15, n)
+price = 20 + 0.8*area + 10*rooms + eps  # цена
+
+df = pd.DataFrame({"area": area, "rooms": rooms, "price": price})
+df.head()
+\end{lstlisting}
+\end{frame}
+
+
+% ====== СЛАЙД: ДЕМО — ОПИСАТЕЛЬНАЯ И КОРРЕЛЯЦИЯ ======
+\begin{frame}[fragile]{Демонстрация: описательная статистика и корреляция}
+\begin{lstlisting}[language=Python]
+print(df.describe(numeric_only=True))
+print("\nКорреляции:\n", df.corr(numeric_only=True))
+
+plt.figure()
+plt.scatter(df["area"], df["price"])
+plt.xlabel("area"); plt.ylabel("price")
+plt.title("Связь area–price"); plt.show()
+\end{lstlisting}
+\textit{Интерпретация:} знак и величина $r$ показывают направление и силу линейной связи.
+\end{frame}
+
+% ====== СЛАЙД: ДЕМО — МОДЕЛЬ OLS ======
+\begin{frame}[fragile]{Демонстрация: модель OLS и сводка}
+\begin{lstlisting}[language=Python]
+X = sm.add_constant(df[["area","rooms"]])
+y = df["price"]
+model = sm.OLS(y, X).fit()
+print(model.summary())
+\end{lstlisting}
+\textbf{Смотрим:} коэффициенты $\hat\beta$, их стандартные ошибки, t-статистики, p-values, $R^2$, F-статистику.\\
+\textit{Вывод:} если p-value для признака $<0.05$, вклад статистически значим.
+\end{frame}
+
+% ====== СЛАЙД: ДЕМО — ДИАГНОСТИКА ОСТАТКОВ ======
+\begin{frame}[fragile]{Демонстрация: диагностика остатков}
+\begin{lstlisting}[language=Python]
+resid, fitted = model.resid, model.fittedvalues
+
+plt.figure()
+plt.scatter(fitted, resid); plt.axhline(0)
+plt.xlabel("Предсказания"); plt.ylabel("Остатки")
+plt.title("Остатки vs предсказания"); plt.show()
+
+sm.qqplot(resid, line="45"); plt.title("QQ-plot остатков"); plt.show()
+\end{lstlisting}
+\textit{Интерпретация:} отсутствие «веера» (гомоскедастичность), QQ-plot близок к прямой (нормальность остатков).
+\end{frame}
+
+% ====== СЛАЙД: ДЕМО — ИНТЕРВАЛЫ ======
+\begin{frame}[fragile]{Демонстрация: доверительные и предсказательные интервалы}
+\begin{lstlisting}[language=Python]
+print("ДИ для коэффициентов:\n", model.conf_int())
+
+new_obs = pd.DataFrame({"area":[80,120], "rooms":[2,3]})
+new_X   = sm.add_constant(new_obs)
+pred    = model.get_prediction(new_X)
+print(pred.summary_frame(alpha=0.05))  # mean_ci_lower/upper, obs_ci_lower/upper
+\end{lstlisting}
+\textbf{Важно:} CI для среднего предсказания уже, чем PI для индивидуального наблюдения.
+\end{frame}
+
+
+% ====== СЛАЙД: СВЯЗЬ С ANOVA ======
+\begin{frame}{Связь с дисперсионным анализом (ANOVA)}
+F-тест из сводки \texttt{summary()} проверяет $H_0$: «все регрессионные коэффициенты (кроме константы) равны нулю».\\[6pt]
+\textit{Если p-value(F) $<0.05$}, модель в целом значима. Это соответствует идее сравнения объяснённой и остаточной дисперсий в ANOVA.
+\end{frame}
+
+% ====== СЛАЙД: ОГРАНИЧЕНИЯ И УЛУЧШЕНИЯ ======
+\begin{frame}{Ограничения и улучшения}
+\begin{itemize}
+  \item Линейность связи: при нелинейности — полиномиальные/лог-преобразования.
+  \item Гомоскедастичность: при «веере» — робастные ошибки (Newey–West), взвешенный МНК.
+  \item Мультиколлинеарность: регуляризация (Ridge/Lasso).
+  \item Валидация: train/test, кросс-валидация, устойчивость результатов.
+\end{itemize}
+\end{frame}
+
+% ====== СЛАЙД: ВЫВОДЫ ======
+\begin{frame}{Выводы}
+\begin{itemize}
+  \item Корреляция и регрессия дают наглядные и интерпретируемые результаты.
+  \item Python + statsmodels позволяют быстро пройти путь: данные $\to$ модель $\to$ гипотезы $\to$ интервалы.
+  \item Диагностика остатков — обязательна для корректной интерпретации.
+\end{itemize}
+Код демонстрации можно поместить в Jupyter/Colab и приложить к сдаче.
+\end{frame}
+
+% ====== СЛАЙД: ИСТОЧНИКИ ======
+\begin{frame}{Источники (курс)}
+\begin{itemize}
+  \item Конспект курса «Методы статистической обработки информации» (Кривулин Н.К.): разделы про оценивание, корреляцию, регрессию, ANOVA, интервальные оценки.
+  \item Методические рекомендации по формату презентации и темам.
+\end{itemize}
+\end{frame}
+
+\end{document}
