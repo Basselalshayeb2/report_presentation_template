@@ -55,20 +55,6 @@
 }
 
 
-% ====== СЛАЙД: ЦЕЛИ И ФОРМАТ ======
-\begin{frame}{Формат экзаменационной презентации}
-\textbf{Цель:} продемонстрировать решение задач статистического анализа на выбранном инструменте (Python: pandas, numpy, matplotlib, statsmodels).\\[4pt]
-\textbf{Требование к структуре:}
-\begin{itemize}
-  \item краткое введение в инструмент;
-  \item демонстрация решения задачи на примере реальных/синтетических данных;
-  \item интерпретация результатов и выводы.
-\end{itemize}
-\textit{Соответствует общему плану презентации из методических указаний.}
-\end{frame}
-
-
-
 % ====== СЛАЙД: ПЛАН ======
 \begin{frame}{План выступления}
 \begin{enumerate}
@@ -99,162 +85,201 @@
 \end{itemize}
 \end{frame}
 
+
+
 % ====== СЛАЙД: ИНСТРУМЕНТ ======
-\begin{frame}{Инструментарий Python для демонстрации}
+\begin{frame}{Инструмент: Python для прикладной статистики}
+\textbf{Язык:} Python 3.x \quad \textbf{Библиотеки:} \texttt{pandas}, \texttt{numpy}, \texttt{scipy}, \texttt{matplotlib}.\\[4pt]
+\textbf{Почему Python:}
 \begin{itemize}
-  \item \texttt{pandas}: загрузка/предобработка данных, таблицы;
-  \item \texttt{numpy}: работа с массивами, генерация данных;
-  \item \texttt{matplotlib}: базовые графики;
-  \item \texttt{statsmodels}: регрессия OLS, сводка, интервал оценки и предсказания.
+  \item Широкая экосистема статистики и визуализации.
+  \item Лёгкая репродукция: Jupyter/Colab/VS Code.
+  \item Быстрый путь: данные $\rightarrow$ анализ $\rightarrow$ графики.
 \end{itemize}
-\textbf{Запуск:} Jupyter/Colab/VS~Code.\\
-\textbf{Установка:} \texttt{pip install pandas numpy matplotlib statsmodels}
-\end{frame}
-
-% ====== СЛАЙД: ТЕОРИЯ КОРРЕЛЯЦИИ ======
-\begin{frame}{Коэффициент корреляции Пирсона}
-Для двух выборок $(x_i)$ и $(y_i)$, $i=1,\dots,n$, выборочная ковариация:
-\[
-s_{XY}=\frac{1}{n}\sum_{i=1}^n (x_i-\bar x)(y_i-\bar y),
-\]
-выборочные дисперсии $s_X^2, s_Y^2$, коэффициент корреляции:
-\[
-r_{XY}=\frac{\sum_{i=1}^n (x_i-\bar x)(y_i-\bar y)}
-{\sqrt{\sum_{i=1}^n (x_i-\bar x)^2}\sqrt{\sum_{i=1}^n (y_i-\bar y)^2}}\in[-1,1].
-\]
-Интерпретация: сила \emph{линейной} связи (не причинность). При $|r|\approx 1$ зависимость близка к линейной.
+\textbf{Где запускать:} Jupyter Notebook/Colab/VS Code.
 \end{frame}
 
 
-% ====== СЛАЙД: ТЕОРИЯ РЕГРЕССИИ ======
-\begin{frame}{Линейная регрессия (многомерная)}
-Модель:
-\[
-y=\beta_0+\beta_1x_1+\dots+\beta_px_p+\varepsilon,\quad \E[\varepsilon]=0,\ \Var(\varepsilon)=\sigma^2.
-\]
-Оценивание $\beta$ методом наименьших квадратов (МНК):
-\[
-\widehat\beta=\arg\min_\beta \sum_{i=1}^n (y_i-\beta_0-\sum_{j=1}^p\beta_j x_{ij})^2.
-\]
-Качество: $R^2$, скорректированный $R^2$. Проверка гипотез: $H_0:\beta_j=0$. Доверительные интервалы для коэффициентов и предсказаний.
-\end{frame}
-
-% ====== СЛАЙД: СВЯЗЬ С ГИПОТЕЗАМИ И ИНТЕРВАЛАМИ ======
-\begin{frame}{Гипотезы и интервальные оценки в регрессии}
+\begin{frame}[fragile]{Установка и запуск окружения}
+\textbf{Установка пакетов:}
+\begin{lstlisting}[language=bash]
+pip install pandas numpy scipy matplotlib scikit-learn
+\end{lstlisting}
+\textbf{Запуск Jupyter:}
+\begin{lstlisting}[language=bash]
+jupyter notebook   # или jupyter lab
+\end{lstlisting}
+\textbf{Структура демо:}
 \begin{itemize}
-  \item \textbf{Проверка гипотез} о параметрах: $H_0:\beta_j=0$ (t-стат., p-value).
-  \item \textbf{F-тест} значимости всей модели (связь с ANOVA).
-  \item \textbf{Доверительные интервалы} для параметров (оценки и их точность).
-  \item \textbf{Предсказательные интервалы} для новых наблюдений (учитывают шум).
+  \item Импорт и загрузка данных (\texttt{sklearn.datasets.load\_diabetes()}).
+  \item Описательная статистика, матрица корреляций.
+  \item Pearson/Spearman: $r$, p-value, доверительные интервалы (Fisher z).
+  \item Визуализация: scatter, тепловая карта.
 \end{itemize}
 \end{frame}
 
 
-% ====== СЛАЙД: ДЕМО — ДАННЫЕ ======
-\begin{frame}[fragile]{Демонстрация: генерация данных}
+\begin{frame}{Виды зависимости (смысл корреляции)}
+\begin{itemize}
+  \item \textbf{Функциональная (детерминированная)}: $Y=f(X)$.
+  \item \textbf{Стохастическая}: изменение $X$ влечёт изменение $Y$ по вероятностному закону.
+  \item \textbf{Независимость}: $P\{X\in A, Y\in B\}=P\{X\in A\}P\{Y\in B\}$.
+\end{itemize}
+Корреляционный анализ изучает меры связи (ковариация, корреляция) и позволяет проверять гипотезы о наличии/отсутствии связи.
+\end{frame}
+
+\begin{frame}{Ковариация и корреляция (Пирсон)}
+Ковариация: \[
+\mathrm{Cov}(X,Y)=\E[XY]-\E X\,\E Y=\E[(X-\E X)(Y-\E Y)].
+\]
+Коэффициент корреляции Пирсона:
+\[
+\rho_{XY}=\frac{\mathrm{Cov}(X,Y)}{\sigma_X\sigma_Y}\in[-1,1].
+\]
+Свойства: инвариантность к сдвигу/масштабу; $\rho=\pm 1$ $\Leftrightarrow$ линейная зависимость $Y=\beta_0+\beta_1 X$.\\
+Важно: \textbf{корреляция} — это сила \emph{линейной} связи (не причинность).
+\end{frame}
+
+
+\begin{frame}{Проверка гипотезы $H_0:\rho=0$ и доверительный интервал}
+Пусть $r$ — выборочная корреляция, $n$ — размер выборки.\\[2pt]
+\textbf{t-статистика:} \[
+t=\frac{r\sqrt{n-2}}{\sqrt{1-r^2}}\ \sim\ t_{n-2}\ \text{при } H_0.
+\]
+Критерий: отвергаем $H_0$ при $|t|>t_{1-\alpha/2,n-2}$ или по p-value $<\alpha$.\\[6pt]
+\textbf{Fisher z-преобразование} для CI $\rho$: $z=\tfrac12\ln\frac{1+r}{1-r}$,\\
+$z\pm z_{1-\alpha/2}/\sqrt{n-3}\ \Rightarrow\ \rho=\frac{e^{2z}-1}{e^{2z}+1}$.
+\end{frame}
+
+
+\begin{frame}{Pearson vs. Spearman (когда какой)}
+\begin{tabular}{@{}p{0.32\linewidth}p{0.28\linewidth}p{0.28\linewidth}@{}}
+\toprule
+ & \textbf{Pearson $r$} & \textbf{Spearman $\rho_s$} \\
+\midrule
+Связь & Линейная & Монотонная (по рангам) \\
+Выбросы & Чувствителен & Робастнее \\
+Данные & Интервальные/отношений & Порядковые/монотонные \\
+\bottomrule
+\end{tabular}
+\end{frame}
+
+\begin{frame}{Данные для демонстрации}
+\textbf{Набор:} \texttt{sklearn.datasets.load\_diabetes()} (медицина, 442 наблюдения).\\
+Непрерывные признаки (возраст, ИМТ, АД и др.), целевая \texttt{target} — прогресс заболевания.\\
+Удобно для матрицы корреляций и парных анализов.
+\end{frame}
+
+\begin{frame}[fragile]{Импорт и подготовка}
 \begin{lstlisting}[language=Python]
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
-import statsmodels.api as sm; np.random.seed(42)
+from scipy import stats
+from sklearn.datasets import load_diabetes
 
-n = 200
-area  = np.random.uniform(30, 150, n)   # площадь
-rooms = np.random.uniform(1, 5, n)      # комнаты
-eps   = np.random.normal(0, 15, n)
-price = 20 + 0.8*area + 10*rooms + eps  # цена
+data = load_diabetes()
+X = pd.DataFrame(data.data, columns=data.feature_names)
+y = pd.Series(data.target, name="target")
+df = pd.concat([X, y], axis=1)
 
-df = pd.DataFrame({"area": area, "rooms": rooms, "price": price})
-df.head()
+df.head()       # первые строки
+df.describe()   # описательная статистика
 \end{lstlisting}
 \end{frame}
 
-
-% ====== СЛАЙД: ДЕМО — ОПИСАТЕЛЬНАЯ И КОРРЕЛЯЦИЯ ======
-\begin{frame}[fragile]{Демонстрация: описательная статистика и корреляция}
+\begin{frame}[fragile]{Матрица корреляций (Pearson)}
 \begin{lstlisting}[language=Python]
-print(df.describe(numeric_only=True))
-print("\nКорреляции:\n", df.corr(numeric_only=True))
+corr_pearson = df.corr(numeric_only=True)  # Pearson по умолчанию
+print(corr_pearson.round(3))
 
 plt.figure()
-plt.scatter(df["area"], df["price"])
-plt.xlabel("area"); plt.ylabel("price")
-plt.title("Связь area–price"); plt.show()
+plt.imshow(corr_pearson, vmin=-1, vmax=1)
+plt.colorbar(); plt.title("Correlation matrix (Pearson)")
+plt.xticks(range(len(corr_pearson.columns)), corr_pearson.columns, rotation=90)
+plt.yticks(range(len(corr_pearson.index)), corr_pearson.index)
+plt.tight_layout(); plt.show()
 \end{lstlisting}
-\textit{Интерпретация:} знак и величина $r$ показывают направление и силу линейной связи.
+Интерпретация: пары с $|r|\gtrsim 0.3$–$0.4$ — кандидаты на значимую линейную связь.
 \end{frame}
 
-% ====== СЛАЙД: ДЕМО — МОДЕЛЬ OLS ======
-\begin{frame}[fragile]{Демонстрация: модель OLS и сводка}
+
+\begin{frame}[fragile]{Pearson: $r$ и p-value для пары признаков}
 \begin{lstlisting}[language=Python]
-X = sm.add_constant(df[["area","rooms"]])
-y = df["price"]
-model = sm.OLS(y, X).fit()
-print(model.summary())
+x = df["bmi"]        # индекс массы тела
+y = df["target"]     # прогресс заболевания
+r_xy, p_xy = stats.pearsonr(x, y)
+print(f"Pearson r(bmi, target) = {r_xy:.3f}, p-value = {p_xy:.3g}")
 \end{lstlisting}
-\textbf{Смотрим:} коэффициенты $\hat\beta$, их стандартные ошибки, t-статистики, p-values, $R^2$, F-статистику.\\
-\textit{Вывод:} если p-value для признака $<0.05$, вклад статистически значим.
+Гипотеза $H_0{:}\ \rho=0$. Если $p<0.05$, связь статистически значима. Знак $r$ укажет направление связи.
 \end{frame}
 
-% ====== СЛАЙД: ДЕМО — ДИАГНОСТИКА ОСТАТКОВ ======
-\begin{frame}[fragile]{Демонстрация: диагностика остатков}
+\begin{frame}[fragile]{Spearman (ранговая корреляция)}
 \begin{lstlisting}[language=Python]
-resid, fitted = model.resid, model.fittedvalues
+corr_spearman = df.corr(numeric_only=True, method="spearman")
+print(corr_spearman.round(3))
 
+r_s, p_s = stats.spearmanr(df["bmi"], df["target"])
+print(f"Spearman rho(bmi, target) = {r_s:.3f}, p-value = {p_s:.3g}")
+\end{lstlisting}
+Когда лучше Spearman: выбросы, нелинейная \emph{монотонная} связь, порядковые шкалы.
+\end{frame}
+
+\begin{frame}[fragile]{Доверительный интервал для $\rho$ (Fisher z)}
+\begin{lstlisting}[language=Python]
+def fisher_ci(r, n, alpha=0.05):
+    z = 0.5*np.log((1+r)/(1-r))
+    z_se = 1/np.sqrt(n-3)
+    z_crit = stats.norm.ppf(1-alpha/2)
+    z_lo, z_hi = z - z_crit*z_se, z + z_crit*z_se
+    to_r = lambda z: (np.exp(2*z)-1)/(np.exp(2*z)+1)
+    return to_r(z_lo), to_r(z_hi)
+
+n = len(df)
+lo, hi = fisher_ci(r_xy, n)
+print(f"95% CI for rho (bmi,target): [{lo:.3f}, {hi:.3f}]")
+\end{lstlisting}
+Интерпретация: интервал не пересекает 0 $\Rightarrow$ линейная связь статистически значима.
+\end{frame}
+
+\begin{frame}[fragile]{Визуализация: scatter-плоты}
+\begin{lstlisting}[language=Python]
 plt.figure()
-plt.scatter(fitted, resid); plt.axhline(0)
-plt.xlabel("Предсказания"); plt.ylabel("Остатки")
-plt.title("Остатки vs предсказания"); plt.show()
-
-sm.qqplot(resid, line="45"); plt.title("QQ-plot остатков"); plt.show()
+plt.scatter(df["bmi"], df["target"])
+plt.xlabel("bmi"); plt.ylabel("target")
+plt.title("bmi vs target (scatter)")
+plt.show()
 \end{lstlisting}
-\textit{Интерпретация:} отсутствие «веера» (гомоскедастичность), QQ-plot близок к прямой (нормальность остатков).
+Цель: оценить форму связи (линейная/нелинейная), наличие выбросов.
 \end{frame}
 
-% ====== СЛАЙД: ДЕМО — ИНТЕРВАЛЫ ======
-\begin{frame}[fragile]{Демонстрация: доверительные и предсказательные интервалы}
-\begin{lstlisting}[language=Python]
-print("ДИ для коэффициентов:\n", model.conf_int())
-
-new_obs = pd.DataFrame({"area":[80,120], "rooms":[2,3]})
-new_X   = sm.add_constant(new_obs)
-pred    = model.get_prediction(new_X)
-print(pred.summary_frame(alpha=0.05))  # mean_ci_lower/upper, obs_ci_lower/upper
-\end{lstlisting}
-\textbf{Важно:} CI для среднего предсказания уже, чем PI для индивидуального наблюдения.
-\end{frame}
-
-
-% ====== СЛАЙД: СВЯЗЬ С ANOVA ======
-\begin{frame}{Связь с дисперсионным анализом (ANOVA)}
-F-тест из сводки \texttt{summary()} проверяет $H_0$: «все регрессионные коэффициенты (кроме константы) равны нулю».\\[6pt]
-\textit{Если p-value(F) $<0.05$}, модель в целом значима. Это соответствует идее сравнения объяснённой и остаточной дисперсий в ANOVA.
-\end{frame}
-
-% ====== СЛАЙД: ОГРАНИЧЕНИЯ И УЛУЧШЕНИЯ ======
-\begin{frame}{Ограничения и улучшения}
+% ====== APPLICATIONS / LIMITS ======
+\begin{frame}{Применение и ограничения}
+\textbf{Где полезно:}
 \begin{itemize}
-  \item Линейность связи: при нелинейности — полиномиальные/лог-преобразования.
-  \item Гомоскедастичность: при «веере» — робастные ошибки (Newey–West), взвешенный МНК.
-  \item Мультиколлинеарность: регуляризация (Ridge/Lasso).
-  \item Валидация: train/test, кросс-валидация, устойчивость результатов.
+  \item Быстрый отбор признаков (feature screening) перед моделированием.
+  \item Диагностика мультиколлинеарности (высокие межпризнаковые корреляции).
+\end{itemize}
+\textbf{Предосторожности:}
+\begin{itemize}
+  \item Pearson отражает \textbf{линейную} связь; Spearman — \textbf{монотонную}.
+  \item Выбросы и неоднородная дисперсия искажают $r$ (используйте визуализацию).
+  \item Корреляция $\neq$ причинность.
+  \item Множественные проверки $\Rightarrow$ корректировки (Bonferroni/FDR).
 \end{itemize}
 \end{frame}
 
-% ====== СЛАЙД: ВЫВОДЫ ======
-\begin{frame}{Выводы}
+\begin{frame}{Итоги}
 \begin{itemize}
-  \item Корреляция и регрессия дают наглядные и интерпретируемые результаты.
-  \item Python + statsmodels позволяют быстро пройти путь: данные $\to$ модель $\to$ гипотезы $\to$ интервалы.
-  \item Диагностика остатков — обязательна для корректной интерпретации.
+  \item Корреляция — простая и наглядная мера связи.
+  \item Python (\texttt{pandas}, \texttt{scipy}) даёт мгновенный расчёт $r$, p-value и CI.
+  \item Визуализация обязательна для корректной интерпретации.
 \end{itemize}
-Код демонстрации можно поместить в Jupyter/Colab и приложить к сдаче.
+Нотбук с кодом включите в архив сдачи; слайды — PDF/PPTX.
 \end{frame}
 
-% ====== СЛАЙД: ИСТОЧНИКИ ======
-\begin{frame}{Источники (курс)}
-\begin{itemize}
-  \item Конспект курса «Методы статистической обработки информации» (Кривулин Н.К.): разделы про оценивание, корреляцию, регрессию, ANOVA, интервальные оценки.
-  \item Методические рекомендации по формату презентации и темам.
-\end{itemize}
+\begin{frame}{Контакты и материалы}
+Код демо: ноутбук \texttt{correlation\_demo.ipynb}.\\
+Пакеты: \texttt{pandas}, \texttt{numpy}, \texttt{scipy}, \texttt{matplotlib}, \texttt{scikit-learn}.\\
+Курс: «Методы статистической обработки информации».
 \end{frame}
 
 \end{document}

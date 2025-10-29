@@ -1,0 +1,137 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage{amsmath, amssymb, amsfonts, mathtools}
+\usepackage{booktabs, graphicx}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes,fit,calc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+  \newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+
+%Для защит онлайн лучше использовать разрешение 16x9
+%\documentclass[aspectratio=169]{beamer}
+
+\input{preamble.tex}
+
+% То, что в квадратных скобках, отображается внизу по центру каждого слайда.
+\title[TRIZ для голосового помощника врача]{Решение противоречия в дипломном проекте\\(голосовой помощник врача «СТОММИС») с применением ТРИЗ}
+
+% То, что в квадратных скобках, отображается в левом нижнем углу.
+\institute[СПбГУ]{\\ Курс ТРИЗ»}
+
+% То, что в квадратных скобках, отображается в левом нижнем углу.
+\author[Альшаеб Басель]{Альшаеб Басель, группа 24.М71-мм}
+
+\begin{document}
+{
+\setbeamertemplate{footline}{}
+% Лого университета или организации, отображается в шапке титульного листа
+\begin{frame}
+  \includegraphics[width=1.4cm]{pictures/SPbGU_Logo.png}
+\vspace{-35pt}
+\hspace{-10pt}
+\begin{center}
+   \begin{tabular}{c}
+        \scriptsize{Санкт-Петербургский государственный университет} \\
+        \scriptsize{Кафедра системного программирования}
+    \end{tabular}
+\titlepage
+\end{center}
+
+\btVFill
+
+{\scriptsize
+  % У научного руководителя должна быть указана научная степень
+   \textbf{Преподаватель:} к.ф.-м.н. Старший преподаватель С.С. Сысоев \\
+ }
+\begin{center}
+  \vspace{5pt}
+  \scriptsize{Санкт-Петербург\\
+                 2025}
+  \end{center}
+
+\end{frame}
+}
+
+% ====== Description of the task ======
+\begin{frame}{Описание задачи}
+  \begin{itemize}
+    \item В существующей медицинской информационной системе \textbf{СТОММИС} врачи взаимодействуют с интерфейсом с помощью традиционных средств ввода — клавиатуры, мыши или сенсорного экрана.
+    Эти методы могут быть неэффективны во время медицинских процедур или в ситуациях, где требуется быстрое и «безрукое» управление.
+    \item \textbf{Цель данной работы:} усовершенствовать систему, внедрив интерфейс голосового управления, который позволит врачам выполнять ключевые действия при помощи голосовых команд.
+    Такое решение повышает удобство, снижает нагрузку на пользователя и обеспечивает более быструю и безопасную работу с системой в клинических условиях.
+  \end{itemize}
+  \bigskip
+\end{frame}
+
+% ====== Description of the technical contradiction ======
+\begin{frame}{Описание технического противоречия}
+  \item Основная сложность заключается в проектировании подсистемы распознавания речи:
+  \begin{itemsize}
+    \item Непрерывное прослушивание обеспечивает высокую точность, но требует значительных вычислительных ресурсов.
+    \item Ограниченное прослушивание экономит ресурсы, но может привести к потере важных голосовых команд.
+  \end{itemsize}
+  \bigskip
+  \begin{itemize}
+    \item Если слушаем \emph{всё} аудио, то растут расходы (время, вычисления, сеть).
+    \item Если слушаем \emph{не всё}, то рискуем пропустить команду врача.
+    \item Хотим: \textbf{минимальные ресурсы} и \textbf{высокая точность распознавания}.
+  \end{itemize}
+  \bigskip
+  \textbf{Техническое противоречие:} Улучшение надёжности распознавания \(\Rightarrow\) рост энергопотребления/сложности.
+\end{frame}
+
+
+
+% ====== Parameters of TRIZ using the table of parameters ======
+\begin{frame}{Параметры ТРИЗ}
+    \begin{columns}[T,onlytextwidth]
+      \begin{column}{0.45\textwidth}
+        \begin{block}{Улучшаемый параметр}
+          \textbf{Надёжность распознавания} (\#27)
+        \end{block}
+        \begin{block}{Ухудшаемые параметры}
+          \begin{itemize}
+            \item Энергопотребление (\#21)
+            \item Сложность устройства/системы (\#36)
+          \end{itemize}
+        \end{block}
+      \end{column}
+      \begin{column}{0.55\textwidth}
+        \centering
+        \begin{tikzpicture}[font=\small]
+          \node[draw,rounded corners,fill=blue!7,inner sep=6pt] (p27) {27: Надёжность};
+          \node[draw,rounded corners,fill=red!7,inner sep=6pt,below left=9mm and -1mm of p27] (p21) {21: Энергопотр.};
+          \node[draw,rounded corners,fill=red!7,inner sep=6pt,below right=9mm and -1mm of p27] (p36) {36: Сложность};
+
+          \draw[-{Latex[length=2mm]}] (p27.south west) -- (p21.north east);
+          \draw[-{Latex[length=2mm]}] (p27.south east) -- (p36.north west);
+        \end{tikzpicture}
+      \end{column}
+    \end{columns}
+\end{frame}
+
+% === Matrix suggestions ===
+\begin{frame}{Матрица противоречий: подсказки принципов}
+  \begin{itemize}
+    \item 27 $\uparrow$ vs 21 $\uparrow$ \(\Rightarrow\) \textbf{Принципы: 10, 19, 28, 35}
+    \item 27 $\uparrow$ vs 36 $\uparrow$ \(\Rightarrow\) \textbf{Принципы: 1, 10, 28, 35}
+  \end{itemize}
+  \bigskip
+  \begin{block}{Интерпретация для проекта}
+  \begin{enumerate}
+    \item \textbf{1. Дробление (Segmentation)} — разнести пайплайн на фазы.
+    \item \textbf{10. Упреждающее действие (Preliminary action)} — лёгкий триггер до тяжёлой модели.
+    \item \textbf{35. Изменение параметров (Parameter change)} — динамические частоты/буферы/модели.
+    \item 19. Периодическое действие; 28. Замена механической системы (на ИИ-эвристику).
+  \end{enumerate}
+  \end{block}
+  \end{frame}
+
+
+\end{document}
