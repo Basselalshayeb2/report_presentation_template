@@ -97,8 +97,8 @@
         \end{block}
         \begin{block}{Ухудшаемые параметры}
           \begin{itemize}
-            \item Энергопотребление (\#21)
-            \item Сложность устройства/системы (\#36)
+            \item \textbf{Энергопотребление} (\#21)
+            \item \textbf{Сложность устройства/системы} (\#36)
           \end{itemize}
         \end{block}
       \end{column}
@@ -117,21 +117,129 @@
 \end{frame}
 
 % === Matrix suggestions ===
-\begin{frame}{Матрица противоречий: подсказки принципов}
-  \begin{itemize}
-    \item 27 $\uparrow$ vs 21 $\uparrow$ \(\Rightarrow\) \textbf{Принципы: 10, 19, 28, 35}
-    \item 27 $\uparrow$ vs 36 $\uparrow$ \(\Rightarrow\) \textbf{Принципы: 1, 10, 28, 35}
-  \end{itemize}
-  \bigskip
-  \begin{block}{Интерпретация для проекта}
-  \begin{enumerate}
-    \item \textbf{1. Дробление (Segmentation)} — разнести пайплайн на фазы.
-    \item \textbf{10. Упреждающее действие (Preliminary action)} — лёгкий триггер до тяжёлой модели.
-    \item \textbf{35. Изменение параметров (Parameter change)} — динамические частоты/буферы/модели.
-    \item 19. Периодическое действие; 28. Замена механической системы (на ИИ-эвристику).
-  \end{enumerate}
-  \end{block}
-  \end{frame}
+\begin{frame}{Матрица противоречий}
+  \begin{block}{27 (Надёжность) vs 21 (Энергопотребление)}
+    Рекомендуемые принципы: \textbf{21, 11, 26, 31}
+    \end{block}
 
+    \begin{itemize}
+      \item \textbf{21. Пропускание (Skipping)} — выполнять только важные участки процесса, игнорировать фоновые сигналы.
+      \item \textbf{11. Резерв (Cushion in advance)} — предусмотреть буфер, предотвращающий потерю начала команды.
+      \item \textbf{26. Копирование (Copying)} — использовать упрощённую «копию» основной модели для предварительного анализа.
+      \item \textbf{31. Пористые структуры (Porous materials)} — чередовать интервалы активного и пассивного распознавания.
+    \end{itemize}
+
+    \bigskip
+    \begin{block}{27 (Надёжность) vs 36 (Сложность)}
+    Рекомендуемые принципы: \textbf{13, 35, 1}
+    \end{block}
+
+    \begin{itemize}
+      \item \textbf{13. Обратная связь (The other way round)} — включать и выключать сложные компоненты в зависимости от состояния.
+      \item \textbf{35. Изменение параметров (Parameter change)} — динамически менять частоту дискретизации и сложность модели.
+      \item \textbf{1. Дробление (Segmentation)} — разделить систему на фазы: Idle → Trigger → Recognition.
+    \end{itemize}
+    \end{frame}
+
+%     \begin{frame}{Выбранные изобретательские принципы и идея решения}
+%       \begin{enumerate}
+%         \item \textbf{26 – Копирование:} лёгкая нейросеть для предраспознавания (предварительный фильтр).
+%         \item \textbf{21 – Пропускание:} игнорирование неинформативного аудио и фоновых шумов.
+%         \item \textbf{11 – Резерв:} короткий буфер, предотвращающий потерю начала команды.
+%         \item \textbf{35 – Изменение параметров:} адаптивная смена настроек (частота, параметры модели).
+%         \item \textbf{1 – Дробление:} поэтапный конвейер обработки сигнала.
+%         \item \textbf{13 – Обратная связь:} автоматическое включение/отключение сложных модулей в зависимости от активности.
+%       \end{enumerate}
+
+%       \bigskip
+%       \textbf{Инвентивная идея:}
+%       Создать адаптивную систему распознавания речи, в которой лёгкая модель предварительно фильтрует аудио и активирует полную нейросеть только при необходимости.
+%       \end{frame}
+
+%       \begin{frame}{Инвентивное решение — архитектура (диаграмма)}
+%         \centering
+%         \begin{tikzpicture}[
+%           node distance=10mm,
+%           box/.style={draw,rounded corners,align=center,minimum width=30mm,minimum height=8mm,fill=gray!10},
+%           heavy/.style={draw,rounded corners,align=center,minimum width=38mm,minimum height=9mm,fill=blue!10,thick},
+%           light/.style={draw,rounded corners,align=center,minimum width=38mm,minimum height=9mm,fill=green!10},
+%           arr/.style={-{Latex[length=2mm]},thick}
+%         ]
+%         \node[box] (mic) {Микрофон / поток};
+%         \node[light,right=18mm of mic] (vad) {Лёгкий VAD\\/ KWS (триггер)};
+%         \node[heavy,right=18mm of vad] (asr) {Полная ASR\\(тяжёлая модель)};
+%         \node[box,right=18mm of asr] (cmd) {Интерпретация\\команды};
+%         \node[box,below=8mm of vad] (idle) {Режим Idle};
+%         \node[box,below=8mm of asr] (rec) {Режим Recognition};
+
+%         \draw[arr] (mic) -- (vad);
+%         \draw[arr] (vad) -- node[above]{триггер} (asr);
+%         \draw[arr] (asr) -- (cmd);
+
+%         \draw[arr] (idle) -- (vad);
+%         \draw[arr] (asr) |- ++(0,-8mm) -| (rec);
+%         \draw[arr] (cmd) |- ++(0,-10mm) -| (idle);
+
+%         \node[draw,dashed,rounded corners,fit=(idle)(vad),inner sep=6pt,label=below:\scriptsize Низкие параметры (частота, буфер, квант.)] {};
+%         \node[draw,dashed,rounded corners,fit=(asr)(rec),inner sep=6pt,label=below:\scriptsize Высокие параметры (модель, частота, контекст)] {};
+%         \end{tikzpicture}
+%         \end{frame}
+
+%         \begin{frame}{Диаграмма состояний (упрощённо)}
+%           \centering
+%           \begin{tikzpicture}[
+%             st/.style={draw,rounded corners,minimum width=24mm,minimum height=7mm,align=center,fill=gray!10},
+%             arr/.style={-{Latex[length=2mm]},thick},
+%             node distance=22mm
+%           ]
+%           \node[st] (idle) {Idle\\(низк. ресурс)};
+%           \node[st,right=of idle] (trig) {Trigger\\(VAD/KWS)};
+%           \node[st,right=of trig] (rec) {Recognition\\(высок. ресурс)};
+
+%           \draw[arr] (idle) -- node[above]{активность речи} (trig);
+%           \draw[arr] (trig) -- node[above]{ключевое слово} (rec);
+%           \draw[arr] (trig) |- +(-0.0,-1.8) -| node[below]{тайм-аут/шум} (idle);
+%           \draw[arr] (rec) |- +(+0.0,-1.8) -| node[below]{конец команды} (idle);
+%           \end{tikzpicture}
+%           \end{frame}
+
+
+%           % === Trade-off plot ===
+% \begin{frame}{Компромисс «ресурсы–точность»: эффект адаптивности}
+%   \centering
+%   \begin{tikzpicture}
+%   \begin{axis}[
+%     width=0.9\linewidth,height=0.55\linewidth,
+%     xlabel={Ресурсы (относит.)}, ylabel={Точность (относит.)},
+%     xmin=0,xmax=1, ymin=0.7,ymax=1.0,
+%     grid=both, legend style={at={(0.02,0.98)},anchor=north west}
+%   ]
+%   \addplot+[mark=*] coordinates {(0.85,0.96) (0.9,0.965)}; \addlegendentry{Непрерывная ASR}
+%   \addplot+[mark=square*] coordinates {(0.25,0.8) (0.3,0.82)}; \addlegendentry{Слишком экономно}
+%   \addplot+[mark=triangle*] coordinates {(0.35,0.9) (0.5,0.93) (0.6,0.95)}; \addlegendentry{Адаптивно (VAD\,$\to$\,ASR)}
+%   \end{axis}
+%   \end{tikzpicture}
+
+%   \medskip
+%   \small Адаптивная схема достигает \(\approx 60\text{–}70\%\) экономии ресурсов при точности \(90\text{–}95\%\).
+%   \end{frame}
+
+%   % === Evaluation slide ===
+% \begin{frame}{Оценка эффекта}
+%   \begin{itemize}
+%     \item \textbf{Ресурсы:} снижение загрузки CPU/GPU и сетевого трафика на \(\mathbf{60\text{–}70\%}\).
+%     \item \textbf{Точность:} поддержание уровня \(\mathbf{90\text{–}95\%}\) за счёт триггерного включения ASR.
+%     \item \textbf{Стоимость:} меньше вызовов «тяжёлой» модели \(\Rightarrow\) меньшие расходы.
+%   \end{itemize}
+%   \end{frame}
+
+%   % === Wrap up ===
+%   \begin{frame}{Выводы}
+%   \begin{enumerate}
+%     \item Противоречие: точность \(\uparrow\) vs ресурсы/сложность \(\uparrow\).
+%     \item Выбранные принципы ТРИЗ: \textbf{10}, \textbf{1}, \textbf{35}.
+%     \item Инвентивное решение: адаптивный конвейер VAD/KWS \(\to\) ASR.
+%   \end{enumerate}
+%   \end{frame}
 
 \end{document}
