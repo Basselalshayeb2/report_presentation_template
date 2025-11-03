@@ -22,7 +22,7 @@
 \title[TRIZ для голосового помощника врача]{Решение противоречия в дипломном проекте\\(голосовой помощник врача «СТОММИС») с применением ТРИЗ}
 
 % То, что в квадратных скобках, отображается в левом нижнем углу.
-\institute[СПбГУ]{\\ Курс ТРИЗ»}
+\institute[СПбГУ]{\\ Курс ТРИЗ}
 
 % То, что в квадратных скобках, отображается в левом нижнем углу.
 \author[Альшаеб Басель]{Альшаеб Басель, группа 24.М71-мм}
@@ -63,7 +63,7 @@
   \begin{itemize}
     \item В существующей медицинской информационной системе \textbf{СТОММИС} врачи взаимодействуют с интерфейсом с помощью традиционных средств ввода — клавиатуры, мыши или сенсорного экрана.
     Эти методы могут быть неэффективны во время медицинских процедур или в ситуациях, где требуется быстрое и «безрукое» управление.
-    \item \textbf{Цель данной работы:} усовершенствовать систему, внедрив интерфейс голосового управления, который позволит врачам выполнять ключевые действия при помощи голосовых команд.
+    \item \textbf{Цель данной работы:} улучшить систему, внедрив интерфейс голосового управления, который позволит врачам выполнять ключевые действия при помощи голосовых команд.
     Такое решение повышает удобство, снижает нагрузку на пользователя и обеспечивает более быструю и безопасную работу с системой в клинических условиях.
   \end{itemize}
   \bigskip
@@ -123,10 +123,10 @@
   \end{block}
 
   \begin{itemize}
-    \item \textbf{21. Пропускание (Skipping)} — выполнять только важные участки процесса, игнорировать фоновые сигналы.
-    \item \textbf{11. Резерв (Cushion in advance)} — предусмотреть буфер, предотвращающий потерю начала команды.
-    \item \textbf{26. Копирование (Copying)} — использовать упрощённую «копию» основной модели для предварительного анализа.
-    \item \textbf{31. Пористые структуры (Porous materials)} — чередовать интервалы активного и пассивного распознавания.
+    \item \textbf{21. Принцип проскока (Skipping)}: обрабoтка наиболее важных сегментов аудио и пропуск неинформативных аудиосигналов.
+    \item \textbf{11. Принцип "заранее подложенной подушки" (Cushion in advance)}: предусмотреть буфер, чтобы не потерять начало команды.
+    \item \textbf{26. Принцип копирования (Copying)}: использовать упрощённую «копию» основной модели для предварительного анализа.
+    \item \textbf{31. Принцип применения пористых материалов (Porous materials)}: чередовать интервалы активного и пассивного распознавания.
   \end{itemize}
 
   \bigskip
@@ -138,9 +138,9 @@
     \end{block}
 
     \begin{itemize}
-      \item \textbf{13. Обратная связь (The other way round)} — включать и выключать сложные компоненты в зависимости от состояния.
-      \item \textbf{35. Изменение параметров (Parameter change)} — динамически менять частоту дискретизации и сложность модели.
-      \item \textbf{1. Дробление (Segmentation)} — разделить систему на фазы: Idle → Trigger → Recognition.
+      \item \textbf{13. Принцип "наоборот" (The other way round)} — включать и выключать сложные компоненты в зависимости от состояния.
+      \item \textbf{35. Принцип изменения физико-химических параметров объекта (Parameter change)} — динамически менять частоту дискретизации и сложность модели.
+      \item \textbf{1. Принцип дробления (Segmentation)} — разделить систему на фазы: Idle → Trigger → Recognition.
     \end{itemize}
   \end{frame}
 
@@ -159,95 +159,103 @@
   Создать адаптивную систему распознавания речи, в которой лёгкая модель предварительно фильтрует аудио и активирует полную нейросеть только при необходимости.
 \end{frame}
 
-
-
 \begin{frame}{Карта соответствия: принципы ТРИЗ \(\rightarrow\) архитектура голосового помощника}
   \centering
-  \resizebox{0.98\linewidth}{!}{%
-  \begin{tikzpicture}[
-    font=\footnotesize,
-    node distance=8mm and 10mm,
-    box/.style={draw,rounded corners,align=center,minimum width=33mm,minimum height=9mm,fill=gray!8},
-    light/.style={draw,rounded corners,align=center,minimum width=38mm,minimum height=10mm,fill=green!12,thick},
-    heavy/.style={draw,rounded corners,align=center,minimum width=42mm,minimum height=11mm,fill=blue!12,thick},
-    arr/.style={-{Latex[length=2.2mm]},thick},
-    tag/.style={circle,draw,inner sep=1pt,minimum size=4.2mm,fill=white,very thick},
-    call/.style={draw,rounded corners,fill=yellow!10,align=left,inner sep=3pt}
-  ]
-
-  % ---- Pipeline nodes
-  \node[box] (mic) {Аудиопоток};
-  \node[box,right=of mic] (idle) {Idle / фон-мониторинг};
-  \node[light,right=of idle] (pre) {Предраспознавание\\(лёгкая модель)};
-  \node[heavy,right=of pre] (asr) {Полное распознавание (ASR)};
-  \node[box,right=of asr] (cmd) {Интерпретация\\и действия};
-
-  % ---- Flow
-  \draw[arr] (mic) -- (idle);
-  \draw[arr] (idle) -- (pre);
-  \draw[arr] (pre) -- (asr);
-  \draw[arr] (asr) -- (cmd);
-
-  % ---- Feedback loop (13)
-  \draw[arr] (cmd.south) |- ++(0,-9mm) -| (idle.south);
-
-  % ---- Tags (principles) attached to nodes/edges
-  % 1 — Дробление (поэтапность)
-  \node[tag,anchor=north] (t1) at ($(idle.north)!0.5!(pre.north)+(0,4.5mm)$) {\bfseries 1};
-
-  % 26 — Копирование (лёгкая «копия» модели)
-  \node[tag,anchor=north east] (t26) at (pre.north east) {\bfseries 26};
-
-  % 21 — Пропускание (игнор неинформативного аудио)
-  \node[tag,anchor=north west] (t21) at (idle.north west) {\bfseries 21};
-
-  % 11 — Резерв (кольцевой буфер)
-  \node[tag,anchor=south] (t11) at ($(idle.south)!0.5!(pre.south)+(0,-4.6mm)$) {\bfseries 11};
-
-  % 35 — Изменение параметров (адаптивные режимы)
-  \node[tag,anchor=north east] (t35) at (asr.north east) {\bfseries 35};
-
-  % 13 — Обратная связь (вкл/выкл модулей)
-  \node[tag,anchor=south east] (t13) at ($(cmd.south east)+(0mm,-0.0mm)$) {\bfseries 13};
-
-  % ---- Callouts (legend)
-  \node[call,anchor=north west] (c1) at ($(mic.north west)+(-2mm,18mm)$)
-  {\bfseries 1) Дробление:\\поэтапный конвейер Idle\,$\to$\,Pre\,$\to$\,ASR};
-  \draw[arr] (c1.south) -- (t1);
-
-  \node[call,anchor=west] (c26) at ($(c1.south west)+(0mm,-10mm)$)
-  {\bfseries 26) Копирование:\\лёгкая «копия» нейросети для фильтрации};
-  \draw[arr] (c26.east) to[bend left=10] (t26);
-
-  \node[call,anchor=west] (c21) at ($(c26.south west)+(0mm,-10mm)$)
-  {\bfseries 21) Пропускание:\\игнор фона/тишины, анализ только релевантного};
-  \draw[arr] (c21.east) to[bend left=8] (t21);
-
-  \node[call,anchor=north east] (c11) at ($(cmd.north east)+(2mm,17mm)$)
-  {\bfseries 11) Резерв:\\короткий кольцевой буфер перед активацией};
-  \draw[arr] (c11.west) to[bend left=10] (t11);
-
-  \node[call,anchor=east] (c35) at ($(c11.south east)+(0mm,-10mm)$)
-  {\bfseries 35) Изменение параметров:\\низкие в Idle, высокие в ASR};
-  \draw[arr] (c35.west) to[bend left=8] (t35);
-
-  \node[call,anchor=east] (c13) at ($(c35.south east)+(0mm,-10mm)$)
-  {\bfseries 13) Обратная связь:\\автовключение/выключение тяжёлых модулей};
-  \draw[arr] (c13.west) to[bend left=8] (t13);
-
-  % ---- Porous windows hint for principle 31 (optional visual)
-  \node[call,anchor=south,align=center] (c31) at ($(pre.south)!0.5!(asr.south)+(0,-16mm)$)
-  {\bfseries 31) «Пористость»:\\окна активного распознавания};
-  \draw[arr] (c31.north) -- ($(pre.south)!0.5!(asr.south)$);
-
-  \end{tikzpicture}
-  }
+  \includegraphics[width=\textwidth]{triz/state_diagram.jpg}
   \vspace{2mm}
-
 
   \footnotesize Числа в кружках — номера изобретательных принципов ТРИЗ:
   \textbf{1, 11, 13, 21, 26, 35} \,(+ намёк на 31).
+
 \end{frame}
+
+% \begin{frame}{Карта соответствия: принципы ТРИЗ \(\rightarrow\) архитектура голосового помощника}
+%   \centering
+%   \resizebox{0.98\linewidth}{!}{%
+%   \begin{tikzpicture}[
+%     font=\footnotesize,
+%     node distance=8mm and 10mm,
+%     box/.style={draw,rounded corners,align=center,minimum width=33mm,minimum height=9mm,fill=gray!8},
+%     light/.style={draw,rounded corners,align=center,minimum width=38mm,minimum height=10mm,fill=green!12,thick},
+%     heavy/.style={draw,rounded corners,align=center,minimum width=42mm,minimum height=11mm,fill=blue!12,thick},
+%     arr/.style={-{Latex[length=2.2mm]},thick},
+%     tag/.style={circle,draw,inner sep=1pt,minimum size=4.2mm,fill=white,very thick},
+%     call/.style={draw,rounded corners,fill=yellow!10,align=left,inner sep=3pt}
+%   ]
+
+%   % ---- Pipeline nodes
+%   \node[box] (mic) {Аудиопоток};
+%   \node[box,right=of mic] (idle) {Idle / фон-мониторинг};
+%   \node[light,right=of idle] (pre) {Предраспознавание\\(лёгкая модель)};
+%   \node[heavy,right=of pre] (asr) {Полное распознавание (ASR)};
+%   \node[box,right=of asr] (cmd) {Интерпретация\\и действия};
+
+%   % ---- Flow
+%   \draw[arr] (mic) -- (idle);
+%   \draw[arr] (idle) -- (pre);
+%   \draw[arr] (pre) -- (asr);
+%   \draw[arr] (asr) -- (cmd);
+
+%   % ---- Feedback loop (13)
+%   \draw[arr] (cmd.south) |- ++(0,-9mm) -| (idle.south);
+
+%   % ---- Tags (principles) attached to nodes/edges
+%   % 1 — Дробление (поэтапность)
+%   \node[tag,anchor=north] (t1) at ($(idle.north)!0.5!(pre.north)+(0,4.5mm)$) {\bfseries 1};
+
+%   % 26 — Копирование (лёгкая «копия» модели)
+%   \node[tag,anchor=north east] (t26) at (pre.north east) {\bfseries 26};
+
+%   % 21 — Пропускание (игнор неинформативного аудио)
+%   \node[tag,anchor=north west] (t21) at (idle.north west) {\bfseries 21};
+
+%   % 11 — Резерв (кольцевой буфер)
+%   \node[tag,anchor=south] (t11) at ($(idle.south)!0.5!(pre.south)+(0,-4.6mm)$) {\bfseries 11};
+
+%   % 35 — Изменение параметров (адаптивные режимы)
+%   \node[tag,anchor=north east] (t35) at (asr.north east) {\bfseries 35};
+
+%   % 13 — Обратная связь (вкл/выкл модулей)
+%   \node[tag,anchor=south east] (t13) at ($(cmd.south east)+(0mm,-0.0mm)$) {\bfseries 13};
+
+%   % ---- Callouts (legend)
+%   \node[call,anchor=north west] (c1) at ($(mic.north west)+(-2mm,18mm)$)
+%   {\bfseries 1) Дробление:\\поэтапный конвейер Idle\,$\to$\,Pre\,$\to$\,ASR};
+%   \draw[arr] (c1.south) -- (t1);
+
+%   \node[call,anchor=west] (c26) at ($(c1.south west)+(0mm,-10mm)$)
+%   {\bfseries 26) Копирование:\\лёгкая «копия» нейросети для фильтрации};
+%   \draw[arr] (c26.east) to[bend left=10] (t26);
+
+%   \node[call,anchor=west] (c21) at ($(c26.south west)+(0mm,-10mm)$)
+%   {\bfseries 21) Пропускание:\\игнор фона/тишины, анализ только релевантного};
+%   \draw[arr] (c21.east) to[bend left=8] (t21);
+
+%   \node[call,anchor=north east] (c11) at ($(cmd.north east)+(2mm,17mm)$)
+%   {\bfseries 11) Резерв:\\короткий кольцевой буфер перед активацией};
+%   \draw[arr] (c11.west) to[bend left=10] (t11);
+
+%   \node[call,anchor=east] (c35) at ($(c11.south east)+(0mm,-10mm)$)
+%   {\bfseries 35) Изменение параметров:\\низкие в Idle, высокие в ASR};
+%   \draw[arr] (c35.west) to[bend left=8] (t35);
+
+%   \node[call,anchor=east] (c13) at ($(c35.south east)+(0mm,-10mm)$)
+%   {\bfseries 13) Обратная связь:\\автовключение/выключение тяжёлых модулей};
+%   \draw[arr] (c13.west) to[bend left=8] (t13);
+
+%   % ---- Porous windows hint for principle 31 (optional visual)
+%   \node[call,anchor=south,align=center] (c31) at ($(pre.south)!0.5!(asr.south)+(0,-16mm)$)
+%   {\bfseries 31) «Пористость»:\\окна активного распознавания};
+%   \draw[arr] (c31.north) -- ($(pre.south)!0.5!(asr.south)$);
+
+%   \end{tikzpicture}
+%   }
+%   \vspace{2mm}
+
+
+%   \footnotesize Числа в кружках — номера изобретательных принципов ТРИЗ:
+%   \textbf{1, 11, 13, 21, 26, 35} \,(+ намёк на 31).
+% \end{frame}
 
 
 % === Trade-off plot ===
@@ -315,12 +323,12 @@
 %   \end{frame}
 
 %   % === Wrap up ===
-%   \begin{frame}{Выводы}
-%   \begin{enumerate}
-%     \item Противоречие: точность \(\uparrow\) vs ресурсы/сложность \(\uparrow\).
-%     \item Выбранные принципы ТРИЗ: \textbf{10}, \textbf{1}, \textbf{35}.
-%     \item Инвентивное решение: адаптивный конвейер VAD/KWS \(\to\) ASR.
-%   \end{enumerate}
-%   \end{frame}
+  \begin{frame}{Выводы}
+  \begin{enumerate}
+    \item Противоречие: точность \(\uparrow\) vs ресурсы/сложность \(\uparrow\).
+    \item Выбранные принципы ТРИЗ: \textbf{26},\textbf{21}, \textbf{11}, \textbf{35}, \textbf{1}, \textbf{13}.
+    \item Инвентивное решение: адаптивный конвейер VAD/KWS \(\to\) ASR.
+  \end{enumerate}
+  \end{frame}
 
 \end{document}
