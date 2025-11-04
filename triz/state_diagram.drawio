@@ -1,58 +1,55 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/27.0.9 Chrome/134.0.6998.205 Electron/35.4.0 Safari/537.36" version="27.0.9">
   <diagram name="Page-1" id="FO6nrztLziKe9rcVWGjf">
-    <mxGraphModel dx="1480" dy="544" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1473" dy="571" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-1" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;1) &lt;b style=&quot;&quot;&gt;Дробление&lt;/b&gt;:&lt;br&gt;поэтапный конвейер Idle -&amp;gt; Pre &lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;-&amp;gt;&lt;/font&gt;&lt;span style=&quot;color: rgb(220, 220, 170);&quot;&gt; &lt;/span&gt;ASR&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="80" y="434" width="260" height="46" as="geometry" />
+        <mxCell id="hWgg4jIDBqUEISsjm22p-23" value="" style="group" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="-150" y="434" width="870" height="266" as="geometry" />
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-2" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;26) &lt;font&gt;&lt;b&gt;Копирование&lt;/b&gt;&lt;/font&gt;&lt;span&gt;:&lt;/span&gt;&lt;br&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;лёгкая «копия» нейросети для фильтрации&lt;/div&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="-20" y="372" width="276" height="44" as="geometry" />
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-1" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;1) &lt;b style=&quot;&quot;&gt;Дробление&lt;/b&gt;:&lt;br&gt;Idle -&amp;gt; Trigger &lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;-&amp;gt;&lt;/font&gt;&lt;span style=&quot;color: rgb(220, 220, 170);&quot;&gt; &lt;/span&gt;ASR&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="hWgg4jIDBqUEISsjm22p-23" vertex="1">
+          <mxGeometry x="80" width="260" height="46" as="geometry" />
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-3" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;21) &lt;b&gt;Пропускание&lt;/b&gt;:&lt;br&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;игнор фона/тишины, анализ только релевантного&lt;/div&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="270" y="370" width="312" height="46" as="geometry" />
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-2" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;font&gt;26) &lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;&lt;b&gt;Копирование&lt;/b&gt;&lt;/font&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;:&lt;/span&gt;&lt;br&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;простая модель для предраспознавания&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="hWgg4jIDBqUEISsjm22p-23" vertex="1">
+          <mxGeometry y="64" width="276" height="44" as="geometry" />
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-4" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;font&gt;11) &lt;b style=&quot;&quot;&gt;Резерв&lt;/b&gt;:&lt;br&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;короткий кольцевой буфер перед активацией&lt;/div&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=#000000;" vertex="1" parent="1">
-          <mxGeometry x="151" y="497" width="287" height="47" as="geometry" />
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-3" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;font&gt;21) &lt;b&gt;П&lt;span&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;роскок&lt;/font&gt;&lt;/span&gt;&lt;/b&gt;&lt;span style=&quot;color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;:&lt;/span&gt;&lt;br&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;игнорирование&lt;/font&gt;&lt;/span&gt; фона/тишины&lt;/div&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="hWgg4jIDBqUEISsjm22p-23" vertex="1">
+          <mxGeometry x="420" width="312" height="46" as="geometry" />
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-5" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;font&gt;35) &lt;b style=&quot;&quot;&gt;Изменение параметров&lt;/b&gt;:&lt;br&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;низкие в Idle, высокие в ASR&lt;/div&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=#000000;" vertex="1" parent="1">
-          <mxGeometry x="460" y="497" width="222" height="46" as="geometry" />
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-4" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;font&gt;11) &lt;b&gt;&quot;З&lt;span&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;аранее подложенной подушки&quot;&lt;/font&gt;&lt;/span&gt;&lt;/b&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));&quot;&gt;:&lt;/span&gt;&lt;br&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;span&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;наличие буфера&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=#000000;" parent="hWgg4jIDBqUEISsjm22p-23" vertex="1">
+          <mxGeometry x="301" y="63" width="287" height="47" as="geometry" />
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-6" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;font&gt;13) &lt;b style=&quot;&quot;&gt;Обратная связь&lt;/b&gt;:&lt;br&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;автовключение/выключение тяжёлых модулей&lt;/div&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=#000000;" vertex="1" parent="1">
-          <mxGeometry x="-140" y="497" width="280" height="49" as="geometry" />
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-5" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;font&gt;35) &lt;b style=&quot;&quot;&gt;Изменение параметров&lt;/b&gt;:&lt;br&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;частота дискретизации&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=#000000;" parent="hWgg4jIDBqUEISsjm22p-23" vertex="1">
+          <mxGeometry x="610" y="63" width="222" height="46" as="geometry" />
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-7" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;font&gt;31) &lt;b&gt;Пористость&lt;/b&gt;:&lt;br&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;окна активного распознавания&lt;/div&gt;&lt;/font&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=#000000;" vertex="1" parent="1">
-          <mxGeometry x="350" y="434" width="201" height="42" as="geometry" />
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-43" value="" style="group" parent="hWgg4jIDBqUEISsjm22p-23" vertex="1" connectable="0">
+          <mxGeometry y="126" width="870" height="140" as="geometry" />
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-43" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="-150" y="560" width="870" height="140" as="geometry" />
-        </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endSize=6;startSize=6;jumpSize=6;" edge="1" parent="vrWnA5NtAAc6spLsfgfW-43" source="vrWnA5NtAAc6spLsfgfW-8" target="vrWnA5NtAAc6spLsfgfW-9">
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endSize=6;startSize=6;jumpSize=6;" parent="vrWnA5NtAAc6spLsfgfW-43" source="vrWnA5NtAAc6spLsfgfW-8" target="vrWnA5NtAAc6spLsfgfW-9" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-8" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;font&gt;Аудиопоток&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=default;" vertex="1" parent="vrWnA5NtAAc6spLsfgfW-43">
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-8" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;font&gt;Аудиопоток&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=default;" parent="vrWnA5NtAAc6spLsfgfW-43" vertex="1">
           <mxGeometry y="67" width="85" height="47" as="geometry" />
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="vrWnA5NtAAc6spLsfgfW-43" source="vrWnA5NtAAc6spLsfgfW-9" target="vrWnA5NtAAc6spLsfgfW-11">
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="vrWnA5NtAAc6spLsfgfW-43" source="vrWnA5NtAAc6spLsfgfW-9" target="vrWnA5NtAAc6spLsfgfW-11" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-9" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;font&gt;Idle / фон-мониторинг&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#EAEAEA;strokeColor=#d79b00;" vertex="1" parent="vrWnA5NtAAc6spLsfgfW-43">
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-9" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;font&gt;Idle / фон-мониторинг&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#EAEAEA;strokeColor=#d79b00;" parent="vrWnA5NtAAc6spLsfgfW-43" vertex="1">
           <mxGeometry x="116" y="67" width="146" height="47" as="geometry" />
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="vrWnA5NtAAc6spLsfgfW-43" source="vrWnA5NtAAc6spLsfgfW-11" target="vrWnA5NtAAc6spLsfgfW-12">
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="vrWnA5NtAAc6spLsfgfW-43" source="vrWnA5NtAAc6spLsfgfW-11" target="vrWnA5NtAAc6spLsfgfW-12" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-11" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;font&gt;Предраспознавание&lt;br/&gt;(лёгкая модель)&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=default;fillColor=#CDEACC;" vertex="1" parent="vrWnA5NtAAc6spLsfgfW-43">
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-11" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;font&gt;Предраспознавание&lt;br&gt;(простая модель)&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=default;fillColor=#CDEACC;" parent="vrWnA5NtAAc6spLsfgfW-43" vertex="1">
           <mxGeometry x="301" y="67" width="151" height="47" as="geometry" />
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="vrWnA5NtAAc6spLsfgfW-43" source="vrWnA5NtAAc6spLsfgfW-12" target="vrWnA5NtAAc6spLsfgfW-13">
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="vrWnA5NtAAc6spLsfgfW-43" source="vrWnA5NtAAc6spLsfgfW-12" target="vrWnA5NtAAc6spLsfgfW-13" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-12" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;font&gt;Полное распознавание (ASR)&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=default;fillColor=#CFE8FF;" vertex="1" parent="vrWnA5NtAAc6spLsfgfW-43">
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-12" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;font&gt;Полное распознавание (ASR)&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fontColor=default;fillColor=#CFE8FF;" parent="vrWnA5NtAAc6spLsfgfW-43" vertex="1">
           <mxGeometry x="490" y="67" width="186" height="47" as="geometry" />
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=1;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="vrWnA5NtAAc6spLsfgfW-43" source="vrWnA5NtAAc6spLsfgfW-13" target="vrWnA5NtAAc6spLsfgfW-8">
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=1;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="vrWnA5NtAAc6spLsfgfW-43" source="vrWnA5NtAAc6spLsfgfW-13" target="vrWnA5NtAAc6spLsfgfW-8" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="250" y="360" as="targetPoint" />
             <Array as="points">
@@ -63,31 +60,25 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-13" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;font style=&quot;font-size: 13px; color: rgb(0, 0, 0);&quot;&gt;Интерпретация&lt;br/&gt;и действия&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="vrWnA5NtAAc6spLsfgfW-43">
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-13" value="&lt;div style=&quot;font-family: Consolas, &amp;quot;Courier New&amp;quot;, monospace; line-height: 19px; white-space: pre;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;div style=&quot;line-height: 19px;&quot;&gt;&lt;font style=&quot;font-size: 13px; color: rgb(0, 0, 0);&quot;&gt;Интерпретация&lt;br/&gt;и действия&lt;/font&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="vrWnA5NtAAc6spLsfgfW-43" vertex="1">
           <mxGeometry x="720" y="67" width="118" height="47" as="geometry" />
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-27" value="13" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="vrWnA5NtAAc6spLsfgfW-43">
-          <mxGeometry x="850" y="80.5" width="20" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-32" value="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="vrWnA5NtAAc6spLsfgfW-43">
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-32" value="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="vrWnA5NtAAc6spLsfgfW-43" vertex="1">
           <mxGeometry x="270" y="60" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-36" value="21" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="vrWnA5NtAAc6spLsfgfW-43">
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-36" value="21" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="vrWnA5NtAAc6spLsfgfW-43" vertex="1">
           <mxGeometry x="179" y="40" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-37" value="26" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="vrWnA5NtAAc6spLsfgfW-43">
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-37" value="26" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="vrWnA5NtAAc6spLsfgfW-43" vertex="1">
           <mxGeometry x="366.5" y="40" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-38" value="35" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="vrWnA5NtAAc6spLsfgfW-43">
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-38" value="35" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="vrWnA5NtAAc6spLsfgfW-43" vertex="1">
           <mxGeometry x="568" y="40" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-40" value="31" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="vrWnA5NtAAc6spLsfgfW-43">
-          <mxGeometry x="460" y="120" width="20" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-41" value="11" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="vrWnA5NtAAc6spLsfgfW-43">
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-41" value="11" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="vrWnA5NtAAc6spLsfgfW-43" vertex="1">
           <mxGeometry x="270" y="114" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="vrWnA5NtAAc6spLsfgfW-44" value="Pipline" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="vrWnA5NtAAc6spLsfgfW-43">
+        <mxCell id="vrWnA5NtAAc6spLsfgfW-44" value="Pipline" style="rounded=0;whiteSpace=wrap;html=1;" parent="vrWnA5NtAAc6spLsfgfW-43" vertex="1">
           <mxGeometry x="405" y="10" width="130" height="30" as="geometry" />
         </mxCell>
       </root>
