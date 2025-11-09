@@ -1,0 +1,277 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage{amsmath, amssymb, amsfonts, mathtools}
+\usepackage{booktabs, graphicx}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{physics}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{tikz}
+% \usepackage{ulem}
+\usetikzlibrary{arrows.meta,positioning,shapes,fit,calc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+  \newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+
+%Для защит онлайн лучше использовать разрешение 16x9
+%\documentclass[aspectratio=169]{beamer}
+
+\input{../preamble.tex}
+
+% То, что в квадратных скобках, отображается внизу по центру каждого слайда.
+\title[MyGym Finance]{Финансовый помощник для посетителей спортзалов}
+\subtitle{Инвест-питч и бизнес-план}
+
+% То, что в квадратных скобках, отображается в левом нижнем углу.
+\institute[СПбГУ]{Экономико-правовые основы рынка}
+
+% То, что в квадратных скобках, отображается в левом нижнем углу.
+\author[Альшаеб Басель]{Альшаеб Басель, группа 24.М71-мм}
+
+\begin{document}
+{
+\setbeamertemplate{footline}{}
+% Лого университета или организации, отображается в шапке титульного листа
+\begin{frame}
+  \includegraphics[width=1.4cm]{pictures/SPbGU_Logo.png}
+\vspace{-35pt}
+\hspace{-10pt}
+\begin{center}
+   \begin{tabular}{c}
+        \scriptsize{Санкт-Петербургский государственный университет} \\
+        \scriptsize{Кафедра системного программирования}
+    \end{tabular}
+\titlepage
+\end{center}
+
+\btVFill
+
+{\scriptsize
+  % У научного руководителя должна быть указана научная степень
+   \textbf{Преподаватель:} Старший преподаватель М.Х. Немешев \\
+ }
+\begin{center}
+  \vspace{5pt}
+  \scriptsize{Санкт-Петербург\\
+                 2025}
+  \end{center}
+
+\end{frame}
+}
+
+% ---------- Проблема ----------
+\begin{frame}{Проблема}
+  \begin{itemize}
+    \item Пользователи \textbf{переплачивают} за абонементы, добавки, персональные тренировки без прозрачного планирования.
+    \item Нет \textbf{единого инструмента}, который связывает тренировки, питание и финансы.
+    \item Фитнес-клубам сложно \textbf{удерживать клиентов} и делать релевантные апселлы.
+  \end{itemize}
+  \vspace{0.5em}
+  \begin{block}{Воздействуем на когнитивный и эмоциональный уровни}
+    Краткий путь по модели Левиджа–Штайнера: \textit{Осведомленность} $\to$ \textit{Знания} $\to$ \textit{Симпатия} $\to$ \textit{Предпочтение} $\to$ \textit{Покупка}.
+  \end{block}
+\end{frame}
+
+% ---------- Решение ----------
+\begin{frame}{Решение: MyGym Finance}
+  \begin{columns}[T]
+    \begin{column}{0.56\textwidth}
+      \begin{itemize}
+        \item Мобильное приложение: \textbf{бюджет} + \textbf{тренировки} + \textbf{аналитика ценности}.
+        \item ИИ-план на месяц: как \textbf{сэкономить 15–25\%} без потери качества тренировок.
+        \item Интеграции: абонемент, CRM клуба, кэшбэк-партнёры.
+        \item Напоминания: «Смените на квартальный — экономия \good{20\%}».
+        \item \textbf{Геймификация}: очки за дисциплину, челленджи.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \begin{center}
+        \includegraphics[width=\linewidth]{app-mockup-placeholder.pdf}\\[0.5em]
+        \small \emph{Мокап экрана: дешборд экономии и прогресса.}
+      \end{center}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+
+% ---------- Рынок и аудитория ----------
+\begin{frame}{Рынок и аудитория}
+  \begin{itemize}
+    \item ЦА: 18–40 лет, активные посетители залов, студенты, молодые специалисты.
+    \item Тренд: \textbf{Digital Wellness} и финтех растут двузначными темпами.
+    \item TAM $\sim$ рынок фитнеса ($\approx\$80$ млрд), SAM — цифровой велнесс ($\approx\$10$ млрд), SOM — локальные рынки СНГ/Европы.
+  \end{itemize}
+  \vspace{0.6em}
+  \begin{tikzpicture}[every node/.style={font=\small}]
+    \node[draw,rounded corners,inner sep=6pt,fill=MyLight] (tam) {TAM: Фитнес $ \approx \$80$ млрд};
+    \node[draw,rounded corners,inner sep=6pt,fill=white,below=4mm of tam] (sam) {SAM: Digital Wellness $ \approx \$10$ млрд};
+    \node[draw,rounded corners,inner sep=6pt,fill=white,below=4mm of sam] (som) {SOM: Стартовые регионы (СНГ/EU)};
+    \draw[-{Latex[length=3mm]}] (tam) -- (sam);
+    \draw[-{Latex[length=3mm]}] (sam) -- (som);
+  \end{tikzpicture}
+\end{frame}
+
+
+% ---------- Slide 4: Конкуренты ----------
+\begin{frame}{Конкуренты и наше преимущество}
+  \small
+  \begin{tabularx}{\linewidth}{>{\bfseries}l l l X}
+    \toprule
+    Конкурент & Фокус & Слабость & Наше преимущество \\
+    \midrule
+    Zenmoney & Финансы & Нет связки с залом & Единая аналитика фитнес+бюджет \\
+    MyFitnessPal & Фитнес/калории & Нет фин.аналитики & Финансовая ценность тренировок \\
+    Клубные приложения & Лояльность & Нет ИИ-экономии & Персональные советы и кэшбэк \\
+    \bottomrule
+  \end{tabularx}
+  \vspace{0.5em}
+
+  \begin{block}{\good{Moat} (барьеры копирования)}
+    Интеграции с локальными клубами, партнёрская сеть кэшбэка, анонимная агрегированная аналитика для B2B.
+  \end{block}
+\end{frame}
+
+
+
+% ---------- Бизнес-модель и цены ----------
+\begin{frame}{Бизнес-модель и ценообразование}
+  \textbf{Freemium}: базовые функции бесплатно, \textbf{Premium} — \good{299 ₽/мес}. \par
+  B2B для клубов: \good{1500 ₽/локацию/мес}.
+
+  \medskip
+  \textbf{Принципы из курса «Ценообразование»}:
+  \begin{itemize}
+    \item Ориентация на спрос + конкуренцию; «справедливая цена» и ценность.
+    \item Дифференциация: студенческие/семейные планы, квартальная экономия.
+    \item \textit{Value-based}: считаем экономию клиента и соотносим с ценой Premium.
+  \end{itemize}
+
+  \medskip
+  \begin{block}{Пример value-case}
+    Средний пользователь экономит \good{600–1200 ₽/мес} → Premium \good{окупается 2–4x}.
+  \end{block}
+\end{frame}
+
+
+
+
+% ---------- Продвижение ----------
+\begin{frame}{Продвижение ПО (инвест-фокус)}
+  \textbf{Воронка (Роджерс):} Осведомлённость → Интерес → Оценка → Испытание → Принятие.
+  \begin{itemize}
+    \item Awareness: Reels/Shorts с тренерами, UGC-челленджи.
+    \item Trial: 30 дней Premium, геймифицированные недели дисциплины.
+    \item PR: локальные турнирчики, университетские залы, коллаборации с нутрициологами.
+    \item CRM: сегментация пушей, «усовершенствованные стимулы» (персональные скидки).
+  \end{itemize}
+\end{frame}
+
+
+% ---------- Финплан и инвестиции ----------
+\begin{frame}{Финплан и запрос инвестиций}
+  \begin{columns}[T]
+    \begin{column}{0.54\textwidth}
+      \textbf{MVP (3 мес)}: \good{~600 тыс. ₽} \newline
+      Разработка, дизайн, бэк+мобайл, интеграции, тесты.
+
+      \medskip
+      \textbf{12 мес прогноз (пример):}
+      \begin{itemize}
+        \item 10k пользователей, конверсия Premium 10\%.
+        \item Выручка: \good{~3.0 млн ₽}. B2B: \good{~0.9 млн ₽}.
+        \item Итого: \good{~3.9 млн ₽} (без учёта комиссий).
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      \textbf{Запрос: \good{0.8–1.2 млн ₽}} \newline
+      на маркетинг и масштабирование.
+      \medskip
+
+      \begin{block}{Окупаемость}
+        Цель: \good{ROI 150\%} за 18 мес (ориентир).
+      \end{block}
+    \end{column}
+   \end{columns}
+   \tiny \emph{Числа примерные для учебного питча; уточняются после маркет.исследований.}
+ \end{frame}
+
+
+
+ % ---------- Roadmap ----------
+\begin{frame}{Roadmap}
+  \begin{tabularx}{\linewidth}{>{\bfseries}l X}
+    \toprule
+    Q1 & MVP: бюджет+тренировки, базовая аналитика, 2 пилотных клуба \\
+    Q2 & Запуск, лид-магниты, партнёрства, кэшбэк v1 \\
+    Q3 & Premium AI, B2B-дашборды, региональное расширение \\
+    Q4 & Масштабирование, новые рынки, локализация EU \\
+    \bottomrule
+  \end{tabularx}
+\end{frame}
+
+
+% ---------- Технологии ----------
+\begin{frame}{Технологии и интеграции}
+  \begin{itemize}
+    \item Мобильные клиенты (iOS/Android), бэкэнд (REST/GraphQL), интеграции с CRM фитнес-клубов.
+    \item МЛ-модуль: персональные советы экономии, прогнозирование затрат/посещаемости.
+    \item Безопасность: OAuth2/Sanctum, шифрование платежных токенов (PCI DSS партнёра).
+  \end{itemize}
+\end{frame}
+
+
+
+
+% ---------- Команда ----------
+\begin{frame}{Команда}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{itemize}
+        \item \textbf{CEO/Founder}: видение продукта, партнёрства.
+        \item \textbf{CTO}: архитектура, масштабирование, качество.
+        \item \textbf{Marketing Lead}: рост, PR, инфлюенсеры.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{itemize}
+        \item \textbf{ML Engineer}: рекомендации, аналитика.
+        \item \textbf{Mobile Lead}: UX, геймификация, ретеншн.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+
+% ---------- Риски и меры ----------
+\begin{frame}{Ключевые риски и меры}
+  \begin{itemize}
+    \item \textbf{Низкая конверсия Premium} → A/B ценообразования, бандлы, квартальные планы.
+    \item \textbf{Интеграции с клубами} → пилоты, стандартный SDK, SLA.
+    \item \textbf{Конкуренция} → фокус на value-based советах и локальные партнёрства.
+  \end{itemize}
+\end{frame}
+
+
+% ---------- Финал ----------
+\begin{frame}{Почему инвестировать в MyGym Finance}
+  \begin{itemize}
+      \item \textbf{Новый сегмент}: стык финтеха и фитнеса с реальной экономией для пользователя.
+      \item \textbf{Модель} с мульти-доходностью: B2C Premium + B2B/партнёрки.
+      \item \textbf{Команда} с опытом бэкенда, мобайла и интеграций.
+  \end{itemize}
+  \vspace{0.5em}
+  \begin{center}
+    \Large \good{Тренируйся умно — трать ещё умнее.}
+  \end{center}
+\end{frame}
+
+% ---------- Q&A ----------
+\begin{frame}[standout]
+  Вопросы?
+\end{frame}
+
+
+\end{document}
