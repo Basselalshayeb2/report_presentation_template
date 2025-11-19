@@ -1,4 +1,4 @@
-\documentclass{beamer}
+\documentclass[aspectratio=169]{beamer}
 \usepackage{amsmath, amssymb, amsfonts, mathtools}
 \usepackage{booktabs, graphicx}
 \usepackage{hyperref}
@@ -10,12 +10,12 @@
 \newcommand{\Var}{\mathrm{Var}}
 
 %Для защит онлайн лучше использовать разрешение 16x9
-%\documentclass[aspectratio=169]{beamer}
+% \documentclass[aspectratio=169]{beamer}
 
 \input{preamble.tex}
 
 % То, что в квадратных скобках, отображается внизу по центру каждого слайда.
-\title[Регрессия и корреляция в Python]{Регрессионный анализ и корреляция\\(живая демонстрация в Python)}
+\title[Корреляционный анализ в Python]{Корреляционный анализ в Python\\(Pearson, Spearman, p-value, доверительные интервалы)}
 
 % То, что в квадратных скобках, отображается в левом нижнем углу.
 \institute[СПбГУ]{\\ Курс «Методы статистической обработки информации»}
@@ -59,85 +59,68 @@
 \begin{frame}{План выступления}
 \begin{enumerate}
   \item Постановка задачи и данные.
-  \item Краткое введение в Python-инструментарий.
-  \item Теория: корреляция и линейная регрессия.
-  \item Демонстрация:
-  \begin{itemize}
-    \item описательная статистика и корреляции;
-    \item модель OLS, сводка, проверка гипотез;
-    \item диагностика остатков, доверительные и предсказательные интервалы;
-    \item краткая связь с ANOVA (F-тест).
-  \end{itemize}
+  \item Краткое введение в инструмент (Python, экосистема, интерфейсы).
+  \item Демонстрация на примерах корреляционного анализа (Pearson/Spearman, p-value, CI).
   \item Выводы и ограничения.
 \end{enumerate}
 \end{frame}
 
-
-% ====== СЛАЙД: ПОСТАНОВКА ЗАДАЧИ ======
-\begin{frame}{Постановка задачи}
-\textbf{Задача:} изучить линейную связь между признаками и целевой переменной и построить модель для предсказания.\\[6pt]
-\textbf{Пример:} прогноз цены по площади и числу комнат (синтетический набор данных, размер $n=200$).\\[6pt]
-\textbf{Почему линейная регрессия и корреляция?}
-\begin{itemize}
-  \item простые модели;
-  \item тесная связь с проверкой гипотез и доверительными интервалами;
-  \item соответствуют темам курса (оценивание, гипотезы, корреляция, регрессия, ANOVA).
-\end{itemize}
+% ================================ СЛАЙД: Python ================================
+\begin{frame}{Python}
+  \textbf{Язык:} Python 3.x \quad \textbf{Библиотеки:} \texttt{pandas}, \texttt{numpy}, \texttt{scipy}, \texttt{matplotlib}.\\[4pt]
+  \textbf{Почему Python:}
+  \begin{itemize}
+    \item Широкая экосистема статистики.
+    \item Быстрый путь: данные $\rightarrow$ анализ $\rightarrow$ графики.
+  \end{itemize}
+  \textbf{Где запускать:} Jupyter Notebook/Colab/VS Code.
 \end{frame}
 
-
-
-% ====== СЛАЙД: ИНСТРУМЕНТ ======
-\begin{frame}{Инструмент: Python для прикладной статистики}
-\textbf{Язык:} Python 3.x \quad \textbf{Библиотеки:} \texttt{pandas}, \texttt{numpy}, \texttt{scipy}, \texttt{matplotlib}.\\[4pt]
-\textbf{Почему Python:}
-\begin{itemize}
-  \item Широкая экосистема статистики и визуализации.
-  \item Лёгкая репродукция: Jupyter/Colab/VS Code.
-  \item Быстрый путь: данные $\rightarrow$ анализ $\rightarrow$ графики.
-\end{itemize}
-\textbf{Где запускать:} Jupyter Notebook/Colab/VS Code.
-\end{frame}
-
-
+% ================================ СЛАЙД: Установка и запуск окружения ================================
 \begin{frame}[fragile]{Установка и запуск окружения}
-\textbf{Установка пакетов:}
-\begin{lstlisting}[language=bash]
-pip install pandas numpy scipy matplotlib scikit-learn
-\end{lstlisting}
-\textbf{Запуск Jupyter:}
-\begin{lstlisting}[language=bash]
-jupyter notebook   # или jupyter lab
-\end{lstlisting}
-\textbf{Структура демо:}
-\begin{itemize}
-  \item Импорт и загрузка данных (\texttt{sklearn.datasets.load\_diabetes()}).
-  \item Описательная статистика, матрица корреляций.
-  \item Pearson/Spearman: $r$, p-value, доверительные интервалы (Fisher z).
-  \item Визуализация: scatter, тепловая карта.
-\end{itemize}
+  \textbf{Установка:}
+  \begin{lstlisting}[language=bash]
+  pip install pandas numpy scipy matplotlib scikit-learn
+  \end{lstlisting}
+  \textbf{Запуск Jupyter:}
+  \begin{lstlisting}[language=bash]
+  jupyter notebook
+  \end{lstlisting}
+  \textbf{Структура демо:}
+  \begin{itemize}
+    \item Импорт и загрузка данных (load_diabetes).
+    \item Описательная статистика, матрица корреляций.
+    \item Pearson/Spearman: r, p-value, доверительные интервалы (Fisher z).
+    \item Визуализация: scatter, тепловая карта.
+  \end{itemize}
 \end{frame}
 
 
+% ================================ СЛАЙД: Виды зависимости ================================
 \begin{frame}{Виды зависимости (смысл корреляции)}
 \begin{itemize}
-  \item \textbf{Функциональная (детерминированная)}: $Y=f(X)$.
-  \item \textbf{Стохастическая}: изменение $X$ влечёт изменение $Y$ по вероятностному закону.
+  \item \textbf{Функциональная}: $Y=f(X)$.
+  \item \textbf{Стохастическая зависимость}: изменение $X$ влечёт изменение $Y$ по вероятностному закону.
   \item \textbf{Независимость}: $P\{X\in A, Y\in B\}=P\{X\in A\}P\{Y\in B\}$.
 \end{itemize}
-Корреляционный анализ изучает меры связи (ковариация, корреляция) и позволяет проверять гипотезы о наличии/отсутствии связи.
+Корреляционный анализ изучает меры связи и позволяет проверять гипотезы о наличии/отсутствии связи.
 \end{frame}
 
+
+% ================================ СЛАЙД: Ковариация и корреляция ================================
 \begin{frame}{Ковариация и корреляция (Пирсон)}
-Ковариация: \[
-\mathrm{Cov}(X,Y)=\E[XY]-\E X\,\E Y=\E[(X-\E X)(Y-\E Y)].
-\]
-Коэффициент корреляции Пирсона:
-\[
-\rho_{XY}=\frac{\mathrm{Cov}(X,Y)}{\sigma_X\sigma_Y}\in[-1,1].
-\]
-Свойства: инвариантность к сдвигу/масштабу; $\rho=\pm 1$ $\Leftrightarrow$ линейная зависимость $Y=\beta_0+\beta_1 X$.\\
-Важно: \textbf{корреляция} — это сила \emph{линейной} связи (не причинность).
+  Ковариация: \[
+  \mathrm{Cov}(X,Y) = E[XY] - E[X] \cdot E[Y]
+  \]
+  Коэффициент Пирсона:  \[
+  \rho = \dfrac{\mathrm{Cov}(X,Y)}{\sigma_X \sigma_Y} \in [-1,1]
+  \]
+  \textbf{Свойства:}
+  \begin{itemize}
+    \item Инвариантен к сдвигу и масштабу
+    \item $\rho = \pm 1 \Leftrightarrow Y = \beta_0 + \beta_1 X$
+  \end{itemize}
+  \textbf{Корреляция:} сила линейной связи (не причинность).
 \end{frame}
 
 
@@ -273,7 +256,6 @@ plt.show()
   \item Python (\texttt{pandas}, \texttt{scipy}) даёт мгновенный расчёт $r$, p-value и CI.
   \item Визуализация обязательна для корректной интерпретации.
 \end{itemize}
-Нотбук с кодом включите в архив сдачи; слайды — PDF/PPTX.
 \end{frame}
 
 \begin{frame}{Контакты и материалы}
