@@ -56,7 +56,7 @@
 }
 
 %
-\begin{frame}{Введение Todo: delete this frame}
+\begin{frame}{Введение}
   \begin{itemize}
     \item \textbf{Цель:} показать, как выполнить корреляционный анализ в Python и корректно интерпретировать результаты для принятия решений на основе данных
     \item \textbf{Показатели:}
@@ -168,70 +168,110 @@
 
 % ================================ СЛАЙД: Ковариация и корреляция ================================
 \begin{frame}{Коэффициент Пирсона}
-  \textbf{Коэффициент Пирсона} - мера линейной связи между двумя переменными
+  \textbf{Коэффициент Пирсона} - показывает, насколько две переменные изменяются вместе по прямой (линейно). % space before covariance
+
+  \vspace{0.5cm}
   Ковариация: \[
   \mathrm{Cov}(X,Y) = E[XY] - E[X] \cdot E[Y]
   \]
+  \vspace{0.5cm}
   Коэффициент Пирсона:  \[
   \rho = \dfrac{\mathrm{Cov}(X,Y)}{\sigma_X \sigma_Y} \in [-1,1]
   \]
   \textbf{Свойства:}
   \begin{itemize}
-    \item Инвариантен к сдвигу и масштабу
+    \item не меняется, если данные смещать или умножать на константу
     \item $\rho = \pm 1 \Leftrightarrow Y = \beta_0 + \beta_1 X$
   \end{itemize}
-  \textbf{Корреляция:} сила линейной связи (не причинность).
+  \textbf{Корреляция:} показывает связь, но не объясняет причину
 \end{frame}
 
 
-\begin{frame}{Проверка гипотезы $H_0:\rho=0$ и доверительный интервал}
-Пусть $r$ — выборочная корреляция, $n$ — размер выборки.\\[2pt]
-\textbf{t-статистика:} \[
-t=\frac{r\sqrt{n-2}}{\sqrt{1-r^2}}\ \sim\ t_{n-2}\ \text{при } H_0.
-\]
-Критерий: отвергаем $H_0$ при $|t|>t_{1-\alpha/2,n-2}$ или по p-value $<\alpha$.\\[6pt]
-\textbf{Fisher z-преобразование} для CI $\rho$: $z=\tfrac12\ln\frac{1+r}{1-r}$,\\
-$z\pm z_{1-\alpha/2}/\sqrt{n-3}\ \Rightarrow\ \rho=\frac{e^{2z}-1}{e^{2z}+1}$.
+\begin{frame}{Коэффициент Спирмена}
+  \textbf{Коэффициент Спирмена} измеряет монотонность связи двух переменных
+  Основан на взаимном ранжировании, а не на абсолютных значениях
+
+  \vspace{0.5cm}
+  Формула (для данных без совпадающих рангов):
+  \[
+    \rho_s = 1 - \frac{6 \sum d_i^2}{n(n^2 - 1)}
+  \]
+  где $d_i$ — разность рангов.
 \end{frame}
 
 
-\begin{frame}{Pearson vs. Spearman (когда какой)}
+\begin{frame}{Pearson vs. Spearman}
 \begin{tabular}{@{}p{0.32\linewidth}p{0.28\linewidth}p{0.28\linewidth}@{}}
 \toprule
  & \textbf{Pearson $r$} & \textbf{Spearman $\rho_s$} \\
 \midrule
 Связь & Линейная & Монотонная (по рангам) \\
-Выбросы & Чувствителен & Робастнее \\
+Выбросы & Чувствителен & Робастность выше \\
 Данные & Интервальные/отношений & Порядковые/монотонные \\
 \bottomrule
 \end{tabular}
 \end{frame}
 
 \begin{frame}{Данные для демонстрации}
-\textbf{Набор:} \texttt{sklearn.datasets.load\_diabetes()} (медицина, 442 наблюдения).\\
-Непрерывные признаки (возраст, ИМТ, АД и др.), целевая \texttt{target} — прогресс заболевания.\\
-Удобно для матрицы корреляций и парных анализов.
+  \textbf{Набор данных:} \texttt{sklearn.datasets.load\_diabetes()} \\[0.2cm]
+
+  Медицинский датасет из 442 наблюдений с непрерывными признаками:
+  \begin{itemize}
+    \item возраст,
+    \item индекс массы тела (ИМТ),
+    \item артериальное давление (АД),
+    \item показатели крови и др.
+  \end{itemize}
+
+  Целевая переменная \texttt{target} отражает \textbf{прогресс заболевания}. \\[0.2cm]
+
+  Набор удобен для:
+  \begin{itemize}
+    \item анализа корреляций,
+    \item построения матрицы корреляций,
+    \item парных scatter-графиков,
+    \item проверки статистической значимости зависимостей.
+  \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Импорт и подготовка}
-\begin{lstlisting}[language=Python]
-import numpy as np, pandas as pd, matplotlib.pyplot as plt
-from scipy import stats
-from sklearn.datasets import load_diabetes
-
-data = load_diabetes()
-X = pd.DataFrame(data.data, columns=data.feature_names)
-y = pd.Series(data.target, name="target")
-df = pd.concat([X, y], axis=1)
-
-df.head()       # первые строки
-df.describe()   # описательная статистика
-\end{lstlisting}
+\begin{frame}{Используемые библиотеки}
+  \begin{itemize}
+    \item \textbf{NumPy:} базовая библиотека для работы с массивами и матрицами, быстрые численные операции
+    \item \textbf{Pandas:} удобная работа с табличными данными (датафреймы, очистка, агрегации, описательная статистика)
+    \item \textbf{Matplotlib:} построение графиков (линий, точек, гистограмм, матриц корреляций)
+    \item \textbf{SciPy:} функции статистики (p-value, критерии значимости, интервалы, распределения)
+    \item \textbf{Scikit-learn:} загрузка датасетов, предобработка, метрики, простые модели машинного обучения
+  \end{itemize}
 \end{frame}
+
+
+\begin{frame}[fragile]{Импорт и подготовка данных}
+
+  \begin{minted}[fontsize=\footnotesize, linenos]{python}
+  import numpy as np
+  import pandas as pd
+  import matplotlib.pyplot as plt
+  from scipy import stats
+  from sklearn.datasets import load_diabetes
+
+  data = load_diabetes()
+
+  X = pd.DataFrame(data.data, columns=data.feature_names)
+  y = pd.Series(data.target, name="target")
+
+  df = pd.concat([X, y], axis=1)
+
+  df.head()
+  df.describe()
+  \end{minted}
+
+\end{frame}
+
 
 \begin{frame}[fragile]{Матрица корреляций (Pearson)}
-\begin{lstlisting}[language=Python]
-corr_pearson = df.corr(numeric_only=True)  # Pearson по умолчанию
+\begin{minted}[fontsize=\footnotesize, linenos]{python}
+
+corr_pearson = df.corr(numeric_only=True)
 print(corr_pearson.round(3))
 
 plt.figure()
@@ -240,34 +280,33 @@ plt.colorbar(); plt.title("Correlation matrix (Pearson)")
 plt.xticks(range(len(corr_pearson.columns)), corr_pearson.columns, rotation=90)
 plt.yticks(range(len(corr_pearson.index)), corr_pearson.index)
 plt.tight_layout(); plt.show()
-\end{lstlisting}
-Интерпретация: пары с $|r|\gtrsim 0.3$–$0.4$ — кандидаты на значимую линейную связь.
+\end{minted}
+Интерпретация: пары с $|r|\gtrsim 0.3$–$0.4$ — кандидаты на значимую линейную связь
 \end{frame}
 
 
 \begin{frame}[fragile]{Pearson: $r$ и p-value для пары признаков}
-\begin{lstlisting}[language=Python]
+\begin{minted}[fontsize=\footnotesize, linenos]{python}
 x = df["bmi"]        # индекс массы тела
 y = df["target"]     # прогресс заболевания
 r_xy, p_xy = stats.pearsonr(x, y)
 print(f"Pearson r(bmi, target) = {r_xy:.3f}, p-value = {p_xy:.3g}")
-\end{lstlisting}
-Гипотеза $H_0{:}\ \rho=0$. Если $p<0.05$, связь статистически значима. Знак $r$ укажет направление связи.
+\end{minted}
+Гипотеза $H_0{:}\ \rho=0$. Если $p<0.05$, связь статистически значима. Знак $r$ укажет направление связи
 \end{frame}
 
 \begin{frame}[fragile]{Spearman (ранговая корреляция)}
-\begin{lstlisting}[language=Python]
+\begin{minted}[fontsize=\footnotesize, linenos]{python}
 corr_spearman = df.corr(numeric_only=True, method="spearman")
 print(corr_spearman.round(3))
 
 r_s, p_s = stats.spearmanr(df["bmi"], df["target"])
 print(f"Spearman rho(bmi, target) = {r_s:.3f}, p-value = {p_s:.3g}")
-\end{lstlisting}
-Когда лучше Spearman: выбросы, нелинейная \emph{монотонная} связь, порядковые шкалы.
+\end{minted}
 \end{frame}
 
-\begin{frame}[fragile]{Доверительный интервал для $\rho$ (Fisher z)}
-\begin{lstlisting}[language=Python]
+\begin{frame}[fragile]{Доверительный интервал для $\rho$ (Fisher z-transformation)}
+\begin{minted}[fontsize=\footnotesize, linenos]{python}
 def fisher_ci(r, n, alpha=0.05):
     z = 0.5*np.log((1+r)/(1-r))
     z_se = 1/np.sqrt(n-3)
@@ -279,49 +318,43 @@ def fisher_ci(r, n, alpha=0.05):
 n = len(df)
 lo, hi = fisher_ci(r_xy, n)
 print(f"95% CI for rho (bmi,target): [{lo:.3f}, {hi:.3f}]")
-\end{lstlisting}
-Интерпретация: интервал не пересекает 0 $\Rightarrow$ линейная связь статистически значима.
+\end{minted}
+Интерпретация: интервал не пересекает 0 $\Rightarrow$ линейная связь статистически значима
 \end{frame}
 
-\begin{frame}[fragile]{Визуализация: scatter-плоты}
-\begin{lstlisting}[language=Python]
+\begin{frame}[fragile]{Визуализация: scatter-график}
+\begin{minted}[fontsize=\footnotesize, linenos]{python}
 plt.figure()
 plt.scatter(df["bmi"], df["target"])
 plt.xlabel("bmi"); plt.ylabel("target")
 plt.title("bmi vs target (scatter)")
 plt.show()
-\end{lstlisting}
-Цель: оценить форму связи (линейная/нелинейная), наличие выбросов.
+\end{minted}
+Цель: определить вид связи (линейная/нелинейная), наличие выбросов
 \end{frame}
 
 % ====== APPLICATIONS / LIMITS ======
-\begin{frame}{Применение и ограничения}
-\textbf{Где полезно:}
-\begin{itemize}
-  \item Быстрый отбор признаков (feature screening) перед моделированием.
-  \item Диагностика мультиколлинеарности (высокие межпризнаковые корреляции).
-\end{itemize}
-\textbf{Предосторожности:}
-\begin{itemize}
-  \item Pearson отражает \textbf{линейную} связь; Spearman — \textbf{монотонную}.
-  \item Выбросы и неоднородная дисперсия искажают $r$ (используйте визуализацию).
-  \item Корреляция $\neq$ причинность.
-  \item Множественные проверки $\Rightarrow$ корректировки (Bonferroni/FDR).
-\end{itemize}
-\end{frame}
+% \begin{frame}{Применение и ограничения}
+% \textbf{Где полезно:}
+% \begin{itemize}
+%   \item Быстрый отбор признаков (feature screening) перед моделированием
+%   \item Диагностика мультиколлинеарности (высокие межпризнаковые корреляции)
+% \end{itemize}
+% \textbf{Предосторожности:}
+% \begin{itemize}
+%   \item Pearson отражает \textbf{линейную} связь; Spearman — \textbf{монотонную}
+%   \item Выбросы и неоднородная дисперсия искажают $r$ (используйте визуализацию)
+%   \item Корреляция не объясняет причину
+%   \item Множественные проверки $\Rightarrow$ корректировки (Bonferroni/FDR)
+% \end{itemize}
+% \end{frame}
 
 \begin{frame}{Итоги}
 \begin{itemize}
-  \item Корреляция — простая и наглядная мера связи.
-  \item Python (\texttt{pandas}, \texttt{scipy}) даёт мгновенный расчёт $r$, p-value и CI.
-  \item Визуализация обязательна для корректной интерпретации.
+  \item Корреляция — простая и наглядная мера связи
+  \item Python (\texttt{pandas}, \texttt{scipy}) даёт мгновенный расчёт $r$, p-value и CI
+  \item Визуализация обязательна для корректной интерпретации
 \end{itemize}
-\end{frame}
-
-\begin{frame}{Контакты и материалы}
-Код демо: ноутбук \texttt{correlation\_demo.ipynb}.\\
-Пакеты: \texttt{pandas}, \texttt{numpy}, \texttt{scipy}, \texttt{matplotlib}, \texttt{scikit-learn}.\\
-Курс: «Методы статистической обработки информации».
 \end{frame}
 
 \end{document}
