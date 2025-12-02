@@ -65,6 +65,14 @@
 \end{enumerate}
 \end{frame}
 
+% ================================ СЛАЙД: Постановка задачи и данные ================================
+\begin{frame}{Постановка задачи и данные}
+  \begin{itemize}
+    \item Постановка задачи: изучение зависимости между признаками и целевой переменной в медицине.
+    \item Данные: набор данных из 442 наблюдений и 10 признаков из sklearn.datasets.load_diabetes().
+  \end{itemize}
+\end{frame}
+
 % ================================ СЛАЙД: Python ================================
 \begin{frame}{Python}
   \textbf{Язык:} Python 3.x \quad \textbf{Библиотеки:} \texttt{pandas}, \texttt{numpy}, \texttt{scipy}, \texttt{matplotlib}.\\[4pt]
@@ -76,8 +84,8 @@
   \textbf{Где запускать:} Jupyter Notebook/Colab/VS Code.
 \end{frame}
 
-% ================================ СЛАЙД: Установка и запуск окружения ================================
-\begin{frame}[fragile]{Установка и запуск окружения}
+% ================================ СЛАЙД: Установка и запуск среды ================================
+\begin{frame}[fragile]{Установка и запуск среды}
   \textbf{Установка:}
   \begin{lstlisting}[language=bash]
   pip install pandas numpy scipy matplotlib scikit-learn
@@ -88,7 +96,7 @@
   \end{lstlisting}
   \textbf{Структура демо:}
   \begin{itemize}
-    \item Импорт и загрузка данных (load_diabetes).
+    \item Импорт и загрузка данных.
     \item Описательная статистика, матрица корреляций.
     \item Pearson/Spearman: r, p-value, доверительные интервалы (Fisher z).
     \item Визуализация: scatter, тепловая карта.
