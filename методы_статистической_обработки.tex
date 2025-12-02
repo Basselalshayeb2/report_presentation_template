@@ -6,6 +6,7 @@
 \usepackage{physics}
 \usepackage{caption}
 \usepackage{listings}
+\usepackage{minted}
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\Var}{\mathrm{Var}}
 
@@ -54,69 +55,120 @@
 \end{frame}
 }
 
+%
+\begin{frame}{Введение Todo: delete this frame}
+  \begin{itemize}
+    \item \textbf{Цель:} показать, как выполнить корреляционный анализ в Python и корректно интерпретировать результаты для принятия решений на основе данных
+    \item \textbf{Показатели:}
+    \begin{itemize}
+      \item \textbf{коэффициент Пирсона}: для линейной связи
+      \item \textbf{коэффициент Спирмена}: для монотонной связи и в ситуациях с выбросами
+    \end{itemize}
+  \end{itemize}
+  \end{frame}
 
 % ====== СЛАЙД: ПЛАН ======
-\begin{frame}{План выступления}
-\begin{enumerate}
-  \item Постановка задачи и данные.
-  \item Краткое введение в инструмент (Python, экосистема, интерфейсы).
-  \item Демонстрация на примерах корреляционного анализа (Pearson/Spearman, p-value, CI).
-  \item Выводы и ограничения.
-\end{enumerate}
-\end{frame}
+% \begin{frame}{План выступления}
+% \begin{enumerate}
+%   \item Постановка задачи и данные.
+%   \item Краткое введение в инструмент (Python, экосистема, интерфейсы).
+%   \item Демонстрация на примерах корреляционного анализа (Pearson/Spearman, p-value, CI).
+%   \item Выводы и ограничения.
+% \end{enumerate}
+% \end{frame}
 
 % ================================ СЛАЙД: Постановка задачи и данные ================================
-\begin{frame}{Постановка задачи и данные}
+\begin{frame}[fragile]{Постановка задачи и данные}
   \begin{itemize}
-    \item Постановка задачи: изучение зависимости между признаками и целевой переменной в медицине.
-    \item Данные: набор данных из 442 наблюдений и 10 признаков из sklearn.datasets.load_diabetes().
-  \end{itemize}
+    \item \textbf{Задача:}
+    \begin{itemize}
+      \item посчитать значения корреляций
+      \item проверить их статистическую значимость
+      \item построить 95\% доверительные интервалы
+      \item визуализировать результаты матрицей и scatter-графиками
+      \item выделить признаки с наиболее устойчивой связью
+    \end{itemize}
+    % \item Постановка задачи: изучение зависимости между признаками и целевой переменной в медицине.
+    \item \textbf{Данные:} датасет из 442 наблюдений и 10 признаков из
+      \begin{minted}{python}
+        from sklearn.datasets import load_diabetes
+        data = load_diabetes()
+        X, y = data.data, data.target
+      \end{minted}
+    \end{itemize}
 \end{frame}
 
 % ================================ СЛАЙД: Python ================================
 \begin{frame}{Python}
-  \textbf{Язык:} Python 3.x \quad \textbf{Библиотеки:} \texttt{pandas}, \texttt{numpy}, \texttt{scipy}, \texttt{matplotlib}.\\[4pt]
-  \textbf{Почему Python:}
+  \textbf{Язык:} Python 3.x:
+  \begin{itemize}
+    \item высокоуровневый интерпретируемый язык программирования, используемый в статистическом анализе из-за простоты синтаксиса и огромного количества библиотек для работы с данными
+  \end{itemize}
+  \textbf{Библиотеки:} \texttt{pandas}, \texttt{numpy}, \texttt{scipy}, \texttt{matplotlib}.\\[4pt]
+  \textbf{Почему Python?}
   \begin{itemize}
     \item Широкая экосистема статистики.
-    \item Быстрый путь: данные $\rightarrow$ анализ $\rightarrow$ графики.
+    \item Быстрый путь: данные $\rightarrow$ анализ $\rightarrow$ графики
   \end{itemize}
-  \textbf{Где запускать:} Jupyter Notebook/Colab/VS Code.
+  \textbf{Где запускать:} Jupyter Notebook/Colab/VS Code
 \end{frame}
 
-% ================================ СЛАЙД: Установка и запуск среды ================================
-\begin{frame}[fragile]{Установка и запуск среды}
-  \textbf{Установка:}
-  \begin{lstlisting}[language=bash]
-  pip install pandas numpy scipy matplotlib scikit-learn
-  \end{lstlisting}
-  \textbf{Запуск Jupyter:}
-  \begin{lstlisting}[language=bash]
-  jupyter notebook
-  \end{lstlisting}
-  \textbf{Структура демо:}
+% ================================ СЛАЙД: Выбор среды разработки: почему Google Colab ================================
+\begin{frame}{Выбор среды разработки: почему Google Colab}
+
+  {\scriptsize
+  \begin{table}[h!]
+    \centering
+    \begin{tabular}{|l|c|c|c|}
+      \hline
+      \textbf{Критерий} & \textbf{Colab} & \textbf{Jupyter Notebook} & \textbf{VS Code} \\ \hline
+      Установка          & Не требуется (облако) & Требуется локально & Требуется локально \\ \hline
+      Мощность ресурсов  & GPU/TPU (ограниченно) & Завист от ПК        & Завист от ПК       \\ \hline
+      Портативность      & Максимальная          & Средняя             & Средняя            \\ \hline
+      Совместимость      & Браузер               & Локальная конфигурация & Расширения/настройка \\ \hline
+      Работа с данными   & Лёгкий импорт из Drive & Локальные файлы     & Проекты/репозитории \\ \hline
+      Стоимость          & Бесплатно             & Бесплатно           & Бесплатно          \\ \hline
+    \end{tabular}
+  \end{table}
+  }
+  \vspace{0.4cm}
+
+  \textbf{Почему выбрал Google Colab:}
   \begin{itemize}
-    \item Импорт и загрузка данных.
-    \item Описательная статистика, матрица корреляций.
-    \item Pearson/Spearman: r, p-value, доверительные интервалы (Fisher z).
-    \item Визуализация: scatter, тепловая карта.
+    \item не требует установки — работает в браузере на любом устройстве
+    \item бесплатных ресурсов достаточно для задач статистики
+    \item легко подключать данные (Google Drive, GitHub)
+    \item позволяет открывать блокнот везде — дома, в университете, на работе
+  \end{itemize}
+\end{frame}
+
+% ================================ СЛАЙД: Структура демо ================================
+\begin{frame}[fragile]{Структура демо}
+  \begin{itemize}
+    \item Импорт и загрузка данных
+    \item Описательная статистика, матрица корреляций
+    \item Pearson/Spearman: r, p-value, доверительные интервалы (Fisher z-transformation)
+    \item Визуализация: scatter, тепловая карта
   \end{itemize}
 \end{frame}
 
 
 % ================================ СЛАЙД: Виды зависимости ================================
-\begin{frame}{Виды зависимости (смысл корреляции)}
-\begin{itemize}
-  \item \textbf{Функциональная}: $Y=f(X)$.
-  \item \textbf{Стохастическая зависимость}: изменение $X$ влечёт изменение $Y$ по вероятностному закону.
-  \item \textbf{Независимость}: $P\{X\in A, Y\in B\}=P\{X\in A\}P\{Y\in B\}$.
+\begin{frame}{Корреляции: виды зависимости}
+  \textbf{Корреляционный анализ}: изучает меры связи и позволяет проверять гипотезы о наличии/отсутствии связи \\
+  \vspace{0.5cm}
+
+  \begin{itemize}
+  \item \textbf{Функциональная}: $Y=f(X)$
+  \item \textbf{Стохастическая зависимость}: изменение $X$ влечёт изменение $Y$ по вероятностному закону
+  \item \textbf{Независимость}: $P\{X\in A, Y\in B\}=P\{X\in A\}P\{Y\in B\}$
 \end{itemize}
-Корреляционный анализ изучает меры связи и позволяет проверять гипотезы о наличии/отсутствии связи.
 \end{frame}
 
 
 % ================================ СЛАЙД: Ковариация и корреляция ================================
-\begin{frame}{Ковариация и корреляция (Пирсон)}
+\begin{frame}{Коэффициент Пирсона}
+  \textbf{Коэффициент Пирсона} - мера линейной связи между двумя переменными
   Ковариация: \[
   \mathrm{Cov}(X,Y) = E[XY] - E[X] \cdot E[Y]
   \]
