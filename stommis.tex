@@ -177,8 +177,7 @@
     \item \textbf{Вход:} аудиофайл сегмента команды из браузера (\texttt{multipart/form-data}, поле \texttt{file}).
     \item Приём аудио в Flask:
 \begin{verbatim}
-if "file" not in request.files: ...
-raw = request.files["file"].read()
+if "file" not in request.files: ... raw = request.files["file"].read()
 \end{verbatim}
     \item \textbf{Нормализация формата:} транскодирование в Ogg/Opus (FFmpeg) для стабильного ASR.
 \begin{verbatim}
@@ -196,10 +195,10 @@ ffmpeg -i pipe:0 -c:a libopus -b:a 48k
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Задача 4: устойчивость к ошибкам ASR/LLM}
+  \frametitle{Устойчивость к ошибкам ASR/LLM}
   \begin{itemize}
     \item Ограничение допустимых действий: \textbf{белый список интентов} и допустимых параметров.
-    \item Жёсткий формат ответа LLM: \textbf{только JSON} по контракту \enquote{intent + slots + confidence}.
+    \item Жёсткий формат ответа LLM: \textbf{только JSON} по контракту \enquote{intent + slots}.
     \item Валидация перед выполнением: синтаксис JSON $\rightarrow$ схема $\rightarrow$ проверка слотов по справочникам.
     \item Fail-safe: при низкой уверенности или ошибке валидации возвращается \textbf{уточняющий вопрос}, действие не применяется.
   \end{itemize}
